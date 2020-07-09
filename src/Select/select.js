@@ -55,26 +55,10 @@ class Select extends Component {
         <StyleRoot>
           <div style={styles.slideInDown} className="backBar">
             <a href="voltar" onClick={this.navigateVoltar}>
-              <img className="back" height={35} style={{ marginLeft: 5 }} src={require('../Assets/return.png')} />
+              <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/return.png')} />
             </a>
-            <div>
-              {(localStorage.getItem('token') != undefined)
-                ?
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div />
-                  <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                    <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5 }}>Token pronto</p>
-                    <img onClick={this.penismusic} draggable='false' width={35} src={require('../Assets/correct.png')} />
-                  </div>
-                </div>
-                :
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div />
-                  <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                    <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5 }}>Aguardando token...</p>
-                    <img draggable='false' width={35} src={require('../Assets/remove.png')} />
-                  </div>
-                </div>}
+            <p className="titleBarList">Selecione o tipo de recurso que deseja criar</p>
+            <div style={{marginRight: 40}}>
             </div>
           </div>
         </StyleRoot>

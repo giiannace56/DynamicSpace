@@ -81,7 +81,7 @@ class Home extends Component {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div />
                 <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5 }}>Token pronto</p>
+                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Token pronto</p>
                   <img onClick={this.penismusic} draggable='false' width={35} src={require('../Assets/correct.png')} />
                 </div>
               </div>
@@ -89,7 +89,7 @@ class Home extends Component {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div />
                 <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5 }}>Aguardando token...</p>
+                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Aguardando token...</p>
                   <img draggable='false' width={35} src={require('../Assets/remove.png')} />
                 </div>
               </div>}

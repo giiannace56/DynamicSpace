@@ -125,7 +125,7 @@ class Criar extends Component {
                 <Navbar />
                 <div className="backBar">
                     <a href="voltar" onClick={this.navigateVoltar}>
-                        <img className="back" height={35} style={{ marginLeft: 5 }} src={require('../Assets/return.png')} />
+                        <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/return.png')} />
                     </a>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: 10, marginLeft: 200, marginRight: 200 }}>

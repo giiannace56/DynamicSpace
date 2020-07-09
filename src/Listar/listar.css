@@ -1,6 +1,11 @@
 
+ @font-face {
+    font-family: 'Roboto';
+    src: url('../Assets/Roboto-Regular.ttf');
+}
+
 .back:hover {
-    transform: rotate(15deg);
+    transform: translateX(-4px);
     transition: ease-in 200ms;
 }
 
@@ -56,6 +61,9 @@
     background-color: rgb(253, 86, 86);
 }   
 
+.imgGrp {
+}
+
 .fundoDelete {
     height: 100vh;
     background-color: rgb(214, 214, 214);
@@ -87,6 +95,13 @@
     margin-left: 210px;
     margin-right: 210px;
     text-align: center;
+}
+
+.titleBarList {
+    font-family: 'Roboto';
+    margin-top: 9px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
 }
 
 .btns {
@@ -143,7 +158,7 @@
 .backBar{
     display: flex;
     justify-content: space-between;
-    background-color: rgba(150, 150, 150, 0.747);
+    background-color: rgba(36, 97, 228, 0.747);
 }
 
 
@@ -153,6 +168,7 @@
 }
 
 .refresh {
+    filter: invert();
     cursor: pointer;
     margin-top: 4px;
     margin-right: 10px;

@@ -178,6 +178,7 @@ class Listar extends Component {
                             <a href="voltar" onClick={this.navigateVoltar}>
                                 <img draggable="false" className="back" height={35} src={require('../Assets/return.png')} />
                             </a>
+                            <p className="titleBarList">Deploy de recursos</p>
                             <a onClick={this.reload}>
                                 <img draggable="false" className="refresh" height={35} src={require('../Assets/refresh.png')} />
                             </a>
@@ -188,8 +189,8 @@ class Listar extends Component {
                     <div className="spacing" />
                     <StyleRoot>
                         <div style={styles.slideInDown} className="titleList">
-                            <img draggable="false" height={60} src={require('../Assets/group.png')} />
-                            <img draggable="false" height={60} src={require('../Assets/single.png')} />
+                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/group.png')} />
+                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/single.png')} />
                         </div>
                     </StyleRoot>
                     <div className="mainView" >

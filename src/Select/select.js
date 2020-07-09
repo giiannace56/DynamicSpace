@@ -50,7 +50,7 @@ class Select extends Component {
 
   render() {
     return (
-      <div style={{ height: "100vh", backgroundColor: 'rgb(214, 214, 214)' }}>
+      <div className="backgroundRocket">
         <Navbar />
         <StyleRoot>
           <div style={styles.slideInDown} className="backBar">
@@ -78,8 +78,7 @@ class Select extends Component {
             </div>
           </div>
         </StyleRoot>
-        <div style={{ overflowX: 'hidden' }}>
-          <img draggable='false' width='460' height='530' style={{ transition: '200ms', marginBottom: -530, position: 'relative', left: 564, zIndex: 0, top: 77 }} src={require('../Assets/rocket.png')} />
+        <div style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
           <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 97, height: 537 }}>
             <StyleRoot className="icon" style={{ marginTop: 100, marginLeft: 20, zIndex: 1 }}>
               <div className='button' style={styles.zoomInDown}>

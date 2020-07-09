@@ -170,7 +170,7 @@ class Listar extends Component {
 
     render() {
         return (
-            <div className="fundoDelete" style={{ height: "100vh", backgroundColor: 'rgb(214, 214, 214)' }}>
+            <div className="fundoDelete">
                 <Navbar />
                 <StyleRoot>
                     <div className="barFixed" style={styles.slideInDown}>
@@ -192,7 +192,6 @@ class Listar extends Component {
                             <img draggable="false" height={60} src={require('../Assets/single.png')} />
                         </div>
                     </StyleRoot>
-                    <img draggable='false' width='460' height='530' style={{ marginBottom: -530, position: 'fixed', left: 564, zIndex: 0, top: 159 }} src={require('../Assets/rocket.png')} />
                     <div className="mainView" >
                         <div className="resourcegroupList">
                             {this.state.resourceGroups == '' ?

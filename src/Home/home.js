@@ -72,7 +72,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div style={{ height: "100vh", backgroundColor: 'rgb(214, 214, 214)'}}>
+      <div className="backgroundRocket">
         <section>
           <Navbar />
           <div>
@@ -96,8 +96,7 @@ class Home extends Component {
           </div>
         </section>
         <div style={{overflowX:'hidden'}}>
-          <img draggable='false' width='460' height='530' style={{ transition: '200ms', marginBottom: -530, position: 'relative', left: 564, zIndex: 0, top: 80 }} src={require('../Assets/rocket.png')} />
-          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 100, height: 537 }}>
+          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 100 }}>
             <StyleRoot className="icon" style={{ marginTop: 100, marginLeft: 200, zIndex: 1 }}>
               <div className='button' style={styles.zoomInDown}>
                 <a href="criar" onClick={this.navigateCriar} draggable="false">

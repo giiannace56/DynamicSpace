@@ -1,0 +1,57 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import login from './Login/login';
+import home from './Home/home'
+import criar from './Criar/criar'
+import select from './Select/select'
+import listar from './Listar/listar'
+import * as serviceWorker from './serviceWorker';
+import { Route, Link, HashRouter as Router, Switch, Redirect, HashRouter } from "react-router-dom";
+
+//Add pages to component
+
+const Login = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const Home = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const Criar = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const Listar = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const Select = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+
+
+//Add routes to pages
+
+const routing = (
+    <HashRouter>
+            <Switch>
+                <Login exact path='/' component={login} />
+                <Home path='/home' component={home} />
+                <Criar path='/criar' component={criar} />
+                <Listar path='/deletar' component={listar} />
+                <Select path='/select' component={select} />
+            </Switch>
+    </HashRouter>
+);
+
+ReactDOM.render(routing, document.getElementById('root'));
+
+//register for offline & unregister for online
+serviceWorker.register();

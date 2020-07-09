@@ -1,0 +1,225 @@
+{
+    "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Resources/deployments/CreateVm-debian.debian-10-10-20200527160049",
+    "name": "CreateVm-debian.debian-10-10-20200527160049",
+    "type": "Microsoft.Resources/deployments",
+    "tags": {
+      "primaryResourceId": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/webappGroup/providers/Microsoft.Compute/virtualMachines/VirtualMachine",
+      "marketplaceItemId": "Microsoft.VirtualMachine",
+      "provisioningHash": "SolutionProvider"
+    },
+    "properties": {
+      "templateHash": "5466771129612449947",
+      "parameters": {
+        "location": {
+          "type": "String",
+          "value": "brazilsouth"
+        },
+        "networkInterfaceName": {
+          "type": "String",
+          "value": "virtualmachine726"
+        },
+        "networkSecurityGroupName": {
+          "type": "String",
+          "value": "VirtualMachine-nsg"
+        },
+        "networkSecurityGroupRules": {
+          "type": "Array",
+          "value": [
+            {
+              "name": "SSH",
+              "properties": {
+                "priority": 300,
+                "protocol": "TCP",
+                "access": "Allow",
+                "direction": "Inbound",
+                
+                "sourceAddressPrefix": "*",
+                "sourcePortRange": "*",
+                "destinationAddressPrefix": "*",
+                "destinationPortRange": "22"
+              }
+            }
+          ]
+        },
+        "subnetName": {
+          "type": "String",
+          "value": "default"
+        },
+        "virtualNetworkName": {
+          "type": "String",
+          "value": "webappGroup-vnet"
+        },
+        "addressPrefixes": {
+          "type": "Array",
+          "value": [
+            "10.0.0.0/24"
+          ]
+        },
+        "subnets": {
+          "type": "Array",
+          "value": [
+            {
+              "name": "default",
+              "properties": {
+                "addressPrefix": "10.0.0.0/24"
+              }
+            }
+          ]
+        },
+        "publicIpAddressName": {
+          "type": "String",
+          "value": "VirtualMachine-ip"
+        },
+        "publicIpAddressType": {
+          "type": "String",
+          "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+          "type": "String",
+          "value": "Basic"
+        },
+        "virtualMachineName": {
+          "type": "String",
+          "value": "VirtualMachine"
+        },
+        "virtualMachineRG": {
+          "type": "String",
+          "value": "webappGroup"
+        },
+        "osDiskType": {
+          "type": "String",
+          "value": "Premium_LRS"
+        },
+        "virtualMachineSize": {
+          "type": "String",
+          "value": "Standard_D2s_v3"
+        },
+        "adminUsername": {
+          "type": "String",
+          "value": "Senai132"
+        },
+        "adminPassword": {
+          "type": "SecureString"
+        },
+        "diagnosticsStorageAccountName": {
+          "type": "String",
+          "value": "webappgroupdiag767"
+        },
+        "diagnosticsStorageAccountId": {
+          "type": "String",
+          "value": "Microsoft.Storage/storageAccounts/webappgroupdiag767"
+        },
+        "diagnosticsStorageAccountType": {
+          "type": "String",
+          "value": "Standard_LRS"
+        },
+        "diagnosticsStorageAccountKind": {
+          "type": "String",
+          "value": "Storage"
+        }
+      },
+      "mode": "Incremental",
+      "debugSetting": {
+        "detailLevel": "None"
+      },
+      "provisioningState": "Running",
+      "timestamp": "2020-05-27T18:58:55.4089925Z",
+      "duration": "PT8.4818094S",
+      "correlationId": "b7339b54-8478-48c2-b908-ae55ba58da52",
+      "providers": [
+        {
+          "namespace": "Microsoft.Network",
+          "resourceTypes": [
+            {
+              "resourceType": "networkInterfaces",
+              "locations": [
+                "brazilsouth"
+              ]
+            },
+            {
+              "resourceType": "networkSecurityGroups",
+              "locations": [
+                "brazilsouth"
+              ]
+            },
+            {
+              "resourceType": "virtualNetworks",
+              "locations": [
+                "brazilsouth"
+              ]
+            },
+            {
+              "resourceType": "publicIpAddresses",
+              "locations": [
+                "brazilsouth"
+              ]
+            }
+          ]
+        },
+        {
+          "namespace": "Microsoft.Compute",
+          "resourceTypes": [
+            {
+              "resourceType": "virtualMachines",
+              "locations": [
+                "brazilsouth"
+              ]
+            }
+          ]
+        },
+        {
+          "namespace": "Microsoft.Storage",
+          "resourceTypes": [
+            {
+              "resourceType": "storageAccounts",
+              "locations": [
+                "brazilsouth"
+              ]
+            }
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "dependsOn": [
+            {
+              "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Network/networkSecurityGroups/VirtualMachine-nsg",
+              "resourceType": "Microsoft.Network/networkSecurityGroups",
+              "resourceName": "VirtualMachine-nsg"
+            },
+            {
+              "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Network/virtualNetworks/webappGroup-vnet",
+              "resourceType": "Microsoft.Network/virtualNetworks",
+              "resourceName": "webappGroup-vnet"
+            },
+            {
+              "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Network/publicIpAddresses/VirtualMachine-ip",
+              "resourceType": "Microsoft.Network/publicIpAddresses",
+              "resourceName": "VirtualMachine-ip"
+            }
+          ],
+          "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Network/networkInterfaces/virtualmachine726",
+          "resourceType": "Microsoft.Network/networkInterfaces",
+          "resourceName": "virtualmachine726"
+        },
+        {
+          "dependsOn": [
+            {
+              "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Network/networkInterfaces/virtualmachine726",
+              "resourceType": "Microsoft.Network/networkInterfaces",
+              "resourceName": "virtualmachine726"
+            },
+            {
+              "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Storage/storageAccounts/webappgroupdiag767",
+              "resourceType": "Microsoft.Storage/storageAccounts",
+              "resourceName": "webappgroupdiag767"
+            }
+          ],
+          "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/webappGroup/providers/Microsoft.Compute/virtualMachines/VirtualMachine",
+          "resourceType": "Microsoft.Compute/virtualMachines",
+          "resourceName": "VirtualMachine"
+        }
+      ],
+      "validationLevel": "Template"
+    }
+  }

@@ -1,0 +1,126 @@
+{
+    "properties": {
+        "mode": "incremental",
+        "template": {
+            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "resources": [
+                {
+                    "name": "IFaceTeste01",
+                    "type": "Microsoft.Network/networkInterfaces",
+                    "apiVersion": "2019-07-01",
+                    "location": "eastus",
+                    "dependsOn": [],
+                    "properties": {
+                        "ipConfigurations": [
+                            {
+                                "name": "ipcofig1",
+                                "properties": {
+                                    "privateIpAddressVersion": "IPv4",
+                                    "privateIPAllocationMethod": "Dynamic",
+                                    "subnet": {
+                                        "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/VNetTeste01/subnets/SubNetTest01"
+                                    },
+                                    "publicIPAddress": {
+                                        "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/publicIPAddresses/IPublic01"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "tags": {}
+                },
+                {
+                    "name": "VNetTeste01",
+                    "type": "Microsoft.Network/virtualnetworks",
+                    "apiVersion": "2020-05-01",
+                    "location": "eastus",
+                    "properties": {
+                        "addressSpace": {
+                            "addressPrefixes": [
+                                "10.0.0.0/16"
+                            ]
+                        },
+                        "subnets": [
+                            {
+                                "name": "SubNetTest01",
+                                "properties": {
+                                    "addressPrefix": "10.0.0.0/24"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "IPublic01",
+                    "type": "Microsoft.Network/publicIPAddresses",
+                    "apiVersion": "2020-04-01",
+                    "location": "eastus",
+                    "sku": {
+                        "name": "Basic"
+                    },
+                    "properties": {
+                        "publicIPAllocationMethod": "Dynamic",
+                        "publicIPAddressVersion": "IPv4"
+                    }
+                },
+                {
+                    "name": "VMubuntutest01",
+                    "location": "eastus",
+                    "type": "Microsoft.Compute/virtualMachines",
+                    "apiVersion": "2017-12-01",
+                    "properties": {
+                        "hardwareProfile": {
+                            "vmSize": "Standard_DS1_v2"
+                        },
+                        "storageProfile": {
+                            "imageReference": {
+                                "sku": "18.04-LTS",
+                                "publisher": "Canonical",
+                                "version": "latest",
+                                "offer": "UbuntuServer"
+                            },
+                            "osDisk": {
+                                "caching": "ReadWrite",
+                                "managedDisk": {
+                                    "storageAccountType": "Standard_LRS"
+                                },
+                                "name": "ubuntudiskteste01",
+                                "createOption": "FromImage"
+                            }
+                        },
+                        "osProfile": {
+                            "adminUsername": "Senai132",
+                            "adminPassword": "Senai132",
+                            "computerName": "VMubuntutest01",
+                            "linuxConfiguration": {
+                                "disablePasswordAuthentication": false
+                            }
+                        },
+                        "networkProfile": {
+                            "virtualNetworks": [
+                                {
+                                    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/VNetTeste01",
+                                    "properties": {
+                                        "type": "Microsoft.Network/virtualNetworks",
+                                        "primary": "true"
+                                    }
+                                }
+                            ],
+                            "networkInterfaces": [
+                                {
+                                    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/networkInterfaces/IFaceTeste01",
+                                    "properties": {
+                                        "name": "{{IfaceNet}}",
+                                        "type": "Microsoft.Network/networkInterfaces",
+                                        "primary": true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

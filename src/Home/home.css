@@ -1,0 +1,8 @@
+
+
+
+.icon :hover {
+    transition: ease-in 200ms;
+    transform: translateY(-5px);
+}
+

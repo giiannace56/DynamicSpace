@@ -233,9 +233,13 @@
     transform: scale(1.5);
 }
 
+.deleteButtonOff:hover {
+    cursor: pointer;
+}
+
 .backgroundLoading {
     position: fixed;
-    left: 201px;
+    left: 462px;
     top: 350px;
 }
 

@@ -54,10 +54,17 @@ class Criar extends Component {
     select = () => {
         this.setState({ enviando: true })
         this.setState({ status: '' })
-        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNetTeste01/subnets/SubNetTest01"
-        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/IPublic01"
-        this.state.resource.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNetTeste01"
-        this.state.resource.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFaceTeste01"
+        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet"+this.state.name+"/subnets/SubNet"+this.state.name
+        this.state.resource.properties.template.resources[0].name = "IFace"+this.state.name
+        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I"+this.state.name
+        this.state.resource.properties.template.resources[1].name = "VNet"+this.state.name
+        this.state.resource.properties.template.resources[1].properties.subnets[0].name = "SubNet"+this.state.name
+        this.state.resource.properties.template.resources[2].name = "I"+this.state.name
+        this.state.resource.properties.template.resources[3].name = "VMubuntu"+this.state.name
+        this.state.resource.properties.template.resources[3].properties.osProfile.computerName = "VMubuntu"+this.state.name
+        this.state.resource.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet"+this.state.name
+        this.state.resource.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace"+this.state.name
+        this.state.resource.properties.template.resources[3].properties.storageProfile.osDisk.name = "ubuntudisk" +this.state.name
         fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
             method: 'GET',
             headers: {

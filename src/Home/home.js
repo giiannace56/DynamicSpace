@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './home.css';
 import Navbar from '../Assets/navbar'
-import { slideInRight, slideInLeft, slideInUp, zoomInDown } from 'react-animations'
+import { slideInRight, slideInLeft, slideInUp, zoomInDown, flipInY, slideInDown } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
 
 var qs = require('qs');
@@ -15,9 +15,13 @@ const styles = {
     animation: 'x 0.5s',
     animationName: Radium.keyframes(zoomInDown, 'zoomInDown')
   },
-  slideInUp: {
+  slideInDown: {
     animation: 'x 0.8s',
-    animationName: Radium.keyframes(slideInUp, 'slideInUp')
+    animationName: Radium.keyframes(slideInDown, 'slideInDown')
+  },
+  flipInY: {
+    animation: 'x 0.4s',
+    animationName: Radium.keyframes(flipInY, 'flipInY')
   }
 
 }
@@ -48,10 +52,10 @@ class Home extends Component {
       .then(resposta => resposta.json())
       .then(response => {
         console.warn(response)
-        if(response.access_token != undefined){
+        if (response.access_token != undefined) {
           localStorage.setItem('token', response.access_token)
           this.setState({ logado: 1 })
-        }else{
+        } else {
           this.setState({ logado: 0 })
         }
       })
@@ -78,36 +82,40 @@ class Home extends Component {
           <div>
             {(this.state.logado == 1)
               ?
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div />
-                <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Token pronto</p>
-                  <img onClick={this.penismusic} draggable='false' width={35} src={require('../Assets/correct.png')} />
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div />
+                  <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Token pronto</p>
+                    <img draggable='false' width={35} src={require('../Assets/images/correct.png')} />
+                  </div>
                 </div>
               </div>
               :
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div />
-                <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
-                  <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Aguardando token...</p>
-                  <img draggable='false' width={35} src={require('../Assets/remove.png')} />
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div />
+                  <div style={{ display: 'flex', marginTop: 5, marginRight: 5 }}>
+                    <p style={{ fontFamily: 'Roboto, sans-serif', position: 'relative', top: 8, marginRight: 5, color: 'rgb(36, 36, 36)' }}>Aguardando token...</p>
+                    <img draggable='false' width={35} src={require('../Assets/images/remove.png')} />
+                  </div>
                 </div>
               </div>}
           </div>
         </section>
-        <div style={{overflowX:'hidden'}}>
+        <div style={{ overflowX: 'hidden' }}>
           <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 100 }}>
             <StyleRoot className="icon" style={{ marginTop: 100, marginLeft: 200, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
+              <div className='button' style={styles.flipInY}>
                 <a href="criar" onClick={this.navigateCriar} draggable="false">
-                  <img className='imgs' draggable="false" width='200' src={require('../Assets/add.png')} />
+                  <img className='imgs' draggable="false" width='200' src={require('../Assets/images/add.png')} />
                 </a>
               </div>
             </StyleRoot>
             <StyleRoot className="icon" style={{ marginTop: 100, marginRight: 200, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
+              <div className='button' style={styles.flipInY}>
                 <a href="deletar" onClick={this.navigateDeletar} draggable="false">
-                  <img draggable="false" width='200' src={require('../Assets/edit.png')} />
+                  <img draggable="false" width='200' src={require('../Assets/images/edit.png')} />
                 </a>
               </div>
             </StyleRoot>

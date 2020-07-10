@@ -1,5 +1,5 @@
 
-.icon :hover {
+.icon :hover  {
     transition: ease-in 200ms;
     transform: translateY(-5px);
 }
@@ -8,7 +8,7 @@
 .backgroundRocket {
     height: 100vh;
     background-color: rgb(214, 214, 214);
-    background-image: url('../Assets/rocket.png');
+    background-image: url('../Assets/images/rocket.png');
     background-repeat: no-repeat;
     background-size: 550px;
     background-position-x: right;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './criar.css';
+import './criarApp.css';
 import Navbar from '../Assets/navbar'
 import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
@@ -38,10 +38,10 @@ class Criar extends Component {
         this.state = {
             resource: basic,
             tamanhoVM: '',
-            resourceGroup: 'DefaultGroup',
+            resourceGroup: '',
             region: '',
             enviando: 0,
-            name: 'DefaultResource',
+            name: '',
             mostrarWin: 0,
             mostrarLin: 0,
             status: '',
@@ -153,7 +153,7 @@ class Criar extends Component {
                     <a href="voltar" onClick={this.navigateVoltar}>
                         <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/images/return.png')} />
                     </a>
-                    <p className="titleBarList" style={{ marginRight: 50 }}>Criar Máquina Virtual</p>
+                    <p className="titleBarList" style={{ marginRight: 50 }}>Criar Web App</p>
                     <div>
 
                     </div>
@@ -175,73 +175,16 @@ class Criar extends Component {
                     </div>
                 </StyleRoot>
                 <StyleRoot>
-                    <div style={styles.slideInLeft} className="criarBox" >
-                        <div className="criarInputs">
-                            <select style={{
-                                border: "0px solid #090B80", borderRadius: "2px", marginBottom: "8px", width: "350px"
-                            }} value={this.state.tamanhoVM} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
-                                <option value="">Selecione</option>
-                                <option value="valor1">Econômica</option>
-                                <option value="valor2">Intermediária</option>
-                                <option value="valor3">Alto custo</option>
-                            </select>
+                    <div style={styles.slideInLeft} className="criarBoxApp" >
+                        <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Nome do Web App' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
                                 ? <button className="buttonVM" onClick={this.select}>Criar</button>
                                 : <button className="buttonVM">Enviando</button>}
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>Mostrar configuração</button>
                         </div>
-                        <StyleRoot>
-                            {this.state.mostrarWin == 1 ?
-                                <div style={styles.flipInX} className="infoBox">
-                                    <p>Nome da máquina: {this.state.name}</p>
-                                    <p>Região: West US 2</p>
-                                    <p>Armazenamento Temporário: 20Gb</p>
-                                    <p>RAM: 4Gb</p>
-                                    <p>vCPUs: 2</p>
-                                    <p>Custo por Hora: US$0,113/h</p>
-                                    <p>Média por mês: US$82,49/a</p>
-                                </div>
-                                :
-                                <img style={{ marginRight: 100, marginTop: 11 }} height={170} src={require('../Assets/images/windows.png')} />
-                            }
-                        </StyleRoot>
-                    </div>
-                    <div style={styles.slideInRight} className="criarBox2" >
-                        <div className="criarInputs">
-                            <select style={{
-                                border: "0px solid #090B80", borderRadius: "2px", marginBottom: "8px", width: "350px"
-                            }} value={this.state.asd} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
-                                <option value="">Selecione</option>
-                                <option value="valor1">Econômica</option>
-                                <option value="valor2">Intermediária</option>
-                                <option value="valor3">Alto custo</option>
-                            </select>
-                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.asd} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.asd} onChange={(event) => { this.setState({ name: event.target.value }) }} />
-                            <br />
-                            {this.state.enviando != true
-                                ? <button className="buttonVM" onClick={this.select}>Criar</button>
-                                : <button className="buttonVM">Enviando</button>}
-                            <button className="buttonVMConfig" onClick={this.mostrarLin}>Mostrar configuração</button>
-                        </div>
-                        <StyleRoot>
-                            {this.state.mostrarLin == 1 ?
-                                <div style={styles.flipInX} className="infoBox">
-                                    <p>Nome da máquina: {this.state.name}</p>
-                                    <p>Região: West US 2</p>
-                                    <p>Armazenamento Temporário: 20Gb</p>
-                                    <p>RAM: 4Gb</p>
-                                    <p>vCPUs: 2</p>
-                                    <p>Custo por Hora: US$0,113/h</p>
-                                    <p>Média por mês: US$82,49/a</p>
-                                </div>
-                                :
-                                <img style={{ marginRight: 100, marginTop: 15 }} height={180} src={require('../Assets/images/linux.png')} />
-                            }
-                        </StyleRoot>
                     </div>
                 </StyleRoot>
             </div>

@@ -1,0 +1,16 @@
+.criarBoxApp {
+  display: flex;
+  margin-top: 80px;
+  margin-left: 130px;
+  margin-right: 130px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.432);
+  padding: 10px;
+}
+
+.criarInputsApp {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+ 
+}

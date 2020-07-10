@@ -44,19 +44,19 @@ class Login extends Component {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", backgroundColor: 'rgba(0, 0, 0, 0.15', marginTop: -25 }}>
           <div style={{ marginLeft: 10, position: 'relative', left: 60, marginTop: 30, zIndex: 10 }}>
-            <img draggable="false" height='100' style={{ marginTop: 40 }} src={require('../Assets/sn_logo.png')} />
+            <img draggable="false" height='100' style={{ marginTop: 40 }} src={require('../Assets/images/sn_logo.png')} />
             <p style={{ fontSize: 30, marginTop: 40, fontFamily: 'Roboto, sans-serif', textAlign: "center", color: 'grey' }}></p>
             <input onChange={this.pin} maxLength='4' style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 50, position: 'relative', left: 23, fontSize: 40, textAlign: "center", color: 'grey' }} />
             {this.state.pin.length == 4 ?
               <a className="botao" draggable='false' href='click' onClick={this.navigate}>
-                <img className="btn" draggable="false" width={60} src={require('../Assets/login.png')} style={{ position: "relative", opacity: 1, marginLeft: 0, top: 70, left: 68, marginRight: -10 }} />
+                <img className="btn" draggable="false" width={60} src={require('../Assets/images/login.png')} style={{ position: "relative", opacity: 1, marginLeft: 0, top: 70, left: 68, marginRight: -10 }} />
               </a>
               :
-              <img draggable="false" width={60} src={require('../Assets/login.png')} style={{ position: "relative", opacity: 0.2, marginLeft: 0, top: 70, left: 68, marginRight: -10 }} />
+              <img draggable="false" width={60} src={require('../Assets/images/login.png')} style={{ position: "relative", opacity: 0.2, marginLeft: 0, top: 70, left: 68, marginRight: -10 }} />
             }
           </div>
-          <img style={{ display: 'flex', position: "relative", left: -181, top: 250, marginRight: -310, zIndex: 0 }} width={310} height={360} src={require('../Assets/rocket.png')} />
-          <img draggable="false" style={{ overflowY: 'hidden', marginTop: -25, marginLeft: 130, zIndex: 2 }} height='720' src={require('../Assets/fundologin.jpg')} />
+          <img style={{ display: 'flex', position: "relative", left: -181, top: 250, marginRight: -310, zIndex: 0 }} width={310} height={360} src={require('../Assets/images/rocket.png')} />
+          <img draggable="false" style={{ overflowY: 'hidden', marginTop: -25, marginLeft: 130, zIndex: 2 }} height='720' src={require('../Assets/images/fundologin.jpg')} />
         </div>
         {this.state.incorreto == 1 ?
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>

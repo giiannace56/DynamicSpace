@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './select.css';
 import Navbar from '../Assets/navbar'
 import Radium, { StyleRoot } from 'radium';
-import { slideInLeft, zoomInDown, slideInRight, slideInDown } from 'react-animations'
+import { slideInLeft, zoomInDown, slideInRight, slideInDown, flipInY } from 'react-animations'
 
 
 var qs = require('qs');
@@ -12,9 +12,9 @@ const styles = {
     animation: 'x 0.5s',
     animationName: Radium.keyframes(zoomInDown, 'zoomInDown')
   },
-  slideInDown: {
-    animation: 'x 0.5s',
-    animationName: Radium.keyframes(slideInDown, 'slideInDown')
+  flipInY: {
+    animation: 'x 0.4s',
+    animationName: Radium.keyframes(flipInY, 'flipInY')
   }
 }
 
@@ -35,6 +35,10 @@ class Select extends Component {
     event.preventDefault()
     this.props.history.push('/criar')
   }
+  navigateCriarApp = (event) => {
+    event.preventDefault()
+    this.props.history.push('/criarapp')
+  }
   navigateListar = (event) => {
     event.preventDefault()
     this.props.history.push('/listar')
@@ -52,45 +56,47 @@ class Select extends Component {
     return (
       <div className="backgroundRocket">
         <Navbar />
-        <StyleRoot>
-          <div style={styles.slideInDown} className="backBar">
-            <a href="voltar" onClick={this.navigateVoltar}>
-              <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/return.png')} />
-            </a>
-            <p className="titleBarList">Selecione o tipo de recurso que deseja criar</p>
-            <div style={{marginRight: 40}}>
-            </div>
+        <div className="backBar">
+          <a href="voltar" onClick={this.navigateVoltar}>
+            <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/images/return.png')} />
+          </a>
+          <p className="titleBarList">Selecione o tipo de recurso que deseja criar</p>
+          <div style={{ marginRight: 40 }}>
           </div>
-        </StyleRoot>
+        </div>
         <div style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
           <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 97, height: 537 }}>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginLeft: 20, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
-                <a href="criar" onClick={this.navigateCriar} draggable="false">
-                  <img className='imgs' draggable="false" width='200' src={require('../Assets/software.png')} />
+            <StyleRoot style={{ marginTop: 100, marginLeft: 20, zIndex: 1 }}>
+              <div className='button' style={styles.flipInY}>
+                <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
+                  <img className='imgs' draggable="false" width='200' src={require('../Assets/images/vm.png')} />
                 </a>
               </div>
+              <p className="descSelect">Máquina Virtual</p>
             </StyleRoot>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginRight: 0, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
-                <a href="criar" onClick={this.navigateCriar} draggable="false">
-                  <img className='imgs' draggable="false" width='200' src={require('../Assets/software.png')} />
+            <StyleRoot style={{ marginTop: 100, marginRight: 0, zIndex: 1 }}>
+              <div className='button' style={styles.flipInY}>
+                <a href="criar" className="icon" onClick={this.navigateCriarApp} draggable="false">
+                  <img className='imgs' draggable="false" width='200' src={require('../Assets/images/webapp.png')} />
                 </a>
               </div>
+              <p className="descSelect">Web App</p>
             </StyleRoot>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginRight: 0, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
-                <a href="criar" onClick={this.navigateCriar} draggable="false">
-                  <img className='imgs' draggable="false" width='200' src={require('../Assets/software.png')} />
+            <StyleRoot style={{ marginTop: 100, marginRight: 0, zIndex: 1 }}>
+              <div className='button' style={styles.flipInY}>
+                <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
+                  <img className='imgs' draggable="false" width='200' src={require('../Assets/images/database.png')} />
                 </a>
               </div>
+              <p className="descSelect">Banco de Dados</p>
             </StyleRoot>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginRight: 20, zIndex: 1 }}>
-              <div className='button' style={styles.zoomInDown}>
-                <a href="criar" onClick={this.navigateCriar} draggable="false">
-                  <img className='imgs' draggable="false" width='200' src={require('../Assets/software.png')} />
+            <StyleRoot style={{ marginTop: 100, marginRight: 20, zIndex: 1 }}>
+              <div className='button' style={styles.flipInY}>
+                <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
+                  <img className='imgs' draggable="false" width='200' src={require('../Assets/images/idk.png')} />
                 </a>
               </div>
+              <p className="descSelect">?????????</p>
             </StyleRoot>
           </section>
         </div>

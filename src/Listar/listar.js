@@ -172,32 +172,30 @@ class Listar extends Component {
         return (
             <div className="fundoDelete">
                 <Navbar />
-                <StyleRoot>
-                    <div className="barFixed" style={styles.slideInDown}>
+                    <div className="barFixed">
                         <div className="backBar">
                             <a href="voltar" onClick={this.navigateVoltar}>
-                                <img draggable="false" className="back" height={35} src={require('../Assets/return.png')} />
+                                <img draggable="false" className="back" height={35} src={require('../Assets/images/return.png')} />
                             </a>
                             <p className="titleBarList">Deploy de recursos</p>
                             <a onClick={this.reload}>
-                                <img draggable="false" className="refresh" height={35} src={require('../Assets/refresh.png')} />
+                                <img draggable="false" className="refresh" height={35} src={require('../Assets/images/refresh.png')} />
                             </a>
                         </div>
                     </div>
-                </StyleRoot>
                 <section style={{ overflowX: 'hidden' }}>
                     <div className="spacing" />
                     <StyleRoot>
                         <div style={styles.slideInDown} className="titleList">
-                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/group.png')} />
-                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/single.png')} />
+                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/images/group.png')} />
+                            <img draggable="false" className="imgGrp" height={60} src={require('../Assets/images/single.png')} />
                         </div>
                     </StyleRoot>
                     <div className="mainView" >
                         <div className="resourcegroupList">
                             {this.state.resourceGroups == '' ?
                                 <StyleRoot>
-                                    <img draggable="false" style={styles.notification} height={100} className="backgroundLoading" src={require('../Assets/loading.png')} />
+                                    <img draggable="false" style={styles.notification} height={100} className="backgroundLoading" src={require('../Assets/images/loading.png')} />
                                 </StyleRoot>
                                 : <div />
                             }
@@ -213,11 +211,11 @@ class Listar extends Component {
                                                 <div className="btns">
                                                     {element.grupoOnline != 'true' || localStorage.getItem(element.grupoDeRecursos) == ''
                                                         ?
-                                                        <img onClick={() => this.deployGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/create.png')} />
+                                                        <img onClick={() => this.deployGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/create.png')} />
                                                         :
-                                                        <img className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/correct.png')} />
+                                                        <img className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/images/correct.png')} />
                                                     }
-                                                    <img onClick={() => this.deleteGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/remove.png')} />
+                                                    <img onClick={() => this.deleteGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/remove.png')} />
                                                 </div>
                                             </div>
                                         </StyleRoot>
@@ -257,8 +255,8 @@ class Listar extends Component {
                                                 </div>
                                                 <div className="btns">
                                                     {localStorage.getItem(element._pk) == 'true' ?
-                                                        <img onClick={() => this.deployResource(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/right-arrow.png')} />
-                                                        : <img className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/question.png')} />
+                                                        <img onClick={() => this.deployResource(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/right-arrow.png')} />
+                                                        : <img className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/images/question.png')} />
                                                     }
                                                 </div>
                                             </div>

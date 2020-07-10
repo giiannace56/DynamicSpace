@@ -4,6 +4,7 @@ import login from './Login/login';
 import home from './Home/home'
 import criar from './Criar/criar'
 import select from './Select/select'
+import criarApp from './CriarApp/criarApp'
 import listar from './Listar/listar'
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, HashRouter as Router, Switch, Redirect, HashRouter } from "react-router-dom";
@@ -36,6 +37,12 @@ const Select = ({ component: Component }) => (
     />
 )
 
+const CriarApp = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+
 
 //Add routes to pages
 
@@ -47,6 +54,7 @@ const routing = (
                 <Criar path='/criar' component={criar} />
                 <Listar path='/deletar' component={listar} />
                 <Select path='/select' component={select} />
+                <CriarApp path='/criarapp' component={criarApp} />
             </Switch>
     </HashRouter>
 );

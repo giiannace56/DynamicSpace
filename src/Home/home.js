@@ -105,14 +105,14 @@ class Home extends Component {
         </section>
         <div style={{ overflowX: 'hidden' }}>
           <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 100 }}>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginLeft: 200, zIndex: 1 }}>
+            <StyleRoot className="icon" style={{ marginTop: 110, marginLeft: 200, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
                 <a href="criar" onClick={this.navigateCriar} draggable="false">
                   <img className='imgs' draggable="false" width='200' src={require('../Assets/images/add.png')} />
                 </a>
               </div>
             </StyleRoot>
-            <StyleRoot className="icon" style={{ marginTop: 100, marginRight: 200, zIndex: 1 }}>
+            <StyleRoot className="icon" style={{ marginTop: 110, marginRight: 200, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
                 <a href="deletar" onClick={this.navigateDeletar} draggable="false">
                   <img draggable="false" width='200' src={require('../Assets/images/edit.png')} />

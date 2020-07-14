@@ -206,7 +206,7 @@
 }
 
 .deleteButtonOff {
-    cursor: default;
+    cursor: not-allowed;
     margin-right: 20px;
     position: relative;
     top: -3.5px;
@@ -235,6 +235,12 @@
 
 .deleteButtonOff:hover {
     cursor: pointer;
+}
+
+.tipoRecursoList {
+    font-family: 'Roboto';
+    margin-right: 40px;
+    margin-top: 10px;
 }
 
 .backgroundLoading {

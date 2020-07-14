@@ -184,6 +184,25 @@ class Listar extends Component {
                     })
                 })
                 break;
+            case 'WebApp':
+                fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/WApp' + element.nomeRecurso + '?api-version=2019-10-01', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(JSON.parse(element.template))
+                })
+                fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recursoOnline: 'true'
+                    })
+                })
+                break;
             default:
                 break;
         }
@@ -269,6 +288,9 @@ class Listar extends Component {
                                                 <div className="listagemText2">
                                                     <p className="tag">Recurso:</p>
                                                     <p className="info">{element.nomeRecurso}</p>
+                                                </div>
+                                                <div className='tipoRecursoList'>
+                                                    <p>{element.tipoRecurso}</p>
                                                 </div>
                                                 <div className="statusText">
                                                     {element.recursoOnline == 'true' && localStorage.getItem(element._pk + 'IsOff') == 'false' || localStorage.getItem(element._pk + 'IsOff') == '' ?

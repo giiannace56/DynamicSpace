@@ -67,6 +67,7 @@
                 {
                     "name": "VMubuntutest01",
                     "location": "eastus",
+                    "dependsOn": [],
                     "type": "Microsoft.Compute/virtualMachines",
                     "apiVersion": "2017-12-01",
                     "properties": {

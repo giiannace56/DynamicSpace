@@ -77,6 +77,7 @@ class Cadastro extends Component {
     })
       .then(response => {
         this.setState({ status: response.status })
+        this.props.history.push('/')
       })
   }
 

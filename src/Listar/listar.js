@@ -45,13 +45,13 @@ class Listar extends Component {
     }
 
     deleteGroup = (element) => {
-        localStorage.removeItem(element.grupoDeRecursos)
+        sessionStorage.removeItem(element.grupoDeRecursos)
         this.setState({ grupoDeletado: element.id })
-        fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
+        fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             }
         })
         fetch('https://dynamicspace.dev.objects.universum.blue/vnext/' + element.grupoDeRecursos, {
@@ -73,7 +73,7 @@ class Listar extends Component {
 
     select = (element) => {
         this.componentDidMount(element.grupoDeRecursos)
-        localStorage.setItem(element.grupoDeRecursos, element.grupoOnline)
+        sessionStorage.setItem(element.grupoDeRecursos, element.grupoOnline)
         console.warn(this.state.data)
     }
 
@@ -116,11 +116,11 @@ class Listar extends Component {
     }
 
     deployGroup(element) {
-        fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
+        fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             },
             body: JSON.stringify({
                 location: 'eastus'
@@ -135,18 +135,18 @@ class Listar extends Component {
                 grupoOnline: 'true'
             })
         })
-        localStorage.setItem(element.grupoDeRecursos + 'IsOff', 'false')
-        localStorage.setItem(element.grupoDeRecursos, true)
+        sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'false')
+        sessionStorage.setItem(element.grupoDeRecursos, true)
         this.componentDidMount(element.grupoDeRecursos)
         this.componentDidMount(element.grupoDeRecursos)
     }
 
     deactivateGroup(element) {
-        fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
+        fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             }
         })
         fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/' + element.id, {
@@ -158,7 +158,7 @@ class Listar extends Component {
                 grupoOnline: 'false'
             })
         })
-        localStorage.setItem(element.grupoDeRecursos + 'IsOff', 'true')
+        sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'true')
         this.componentDidMount()
         this.componentDidMount()
     }
@@ -166,11 +166,11 @@ class Listar extends Component {
     deployResource(element) {
         switch (element.tipoRecurso) {
             case 'VirtualMachine':
-                fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
                     body: JSON.stringify(JSON.parse(element.template))
                 })
@@ -185,11 +185,11 @@ class Listar extends Component {
                 })
                 break;
             case 'WebApp':
-                fetch('https://management.azure.com/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/WApp' + element.nomeRecurso + '?api-version=2019-10-01', {
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/WApp' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
                     body: JSON.stringify(JSON.parse(element.template))
                 })
@@ -252,7 +252,7 @@ class Listar extends Component {
                                                     <p className="info">{element.grupoDeRecursos}</p>
                                                 </div>
                                                 <div className="btns">
-                                                    {element.grupoOnline != 'true' || localStorage.getItem(element.grupoDeRecursos) == ''
+                                                    {element.grupoOnline != 'true' || sessionStorage.getItem(element.grupoDeRecursos) == ''
                                                         ?
                                                         <img onClick={() => this.deployGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/create.png')} />
                                                         :
@@ -293,14 +293,14 @@ class Listar extends Component {
                                                     <p>{element.tipoRecurso}</p>
                                                 </div>
                                                 <div className="statusText">
-                                                    {element.recursoOnline == 'true' && localStorage.getItem(element._pk + 'IsOff') == 'false' || localStorage.getItem(element._pk + 'IsOff') == '' ?
+                                                    {element.recursoOnline == 'true' && sessionStorage.getItem(element._pk + 'IsOff') == 'false' || sessionStorage.getItem(element._pk + 'IsOff') == '' ?
                                                         <p className="online">OK!</p>
                                                         :
                                                         <p className="offline"></p>
                                                     }
                                                 </div>
                                                 <div className="btns">
-                                                    {localStorage.getItem(element._pk) == 'true' ?
+                                                    {sessionStorage.getItem(element._pk) == 'true' ?
                                                         <img onClick={() => this.deployResource(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/right-arrow.png')} />
                                                         : <img className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/images/question.png')} />
                                                     }

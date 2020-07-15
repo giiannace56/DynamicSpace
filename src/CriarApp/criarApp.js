@@ -55,7 +55,7 @@ class Criar extends Component {
         this.setState({ enviando: true })
         this.setState({ status: '' })
         this.state.resource.properties.template.resources[0].name = "WApp" + this.state.name
-        this.state.resource.properties.template.resources[0].properties.serverFarmId = "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourcegroups/" + this.state.resourceGroup + "/providers/Microsoft.Web/serverfarms/SFarm" + this.state.name
+        this.state.resource.properties.template.resources[0].properties.serverFarmId = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourcegroups/" + this.state.resourceGroup + "/providers/Microsoft.Web/serverfarms/SFarm" + this.state.name
         this.state.resource.properties.template.resources[0].dependsOn[0] = "Microsoft.Web/serverfarms/SFarm" + this.state.name
         this.state.resource.properties.template.resources[0].properties.name = "WApp" + this.state.name
         this.state.resource.properties.template.resources[1].name = "SFarm" + this.state.name

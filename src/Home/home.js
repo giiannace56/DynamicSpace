@@ -37,15 +37,15 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    fetch('https://login.microsoftonline.com/b1f9f893-1ebe-45b9-b999-701363893577/oauth2/token', {
+    fetch('https://login.microsoftonline.com/'+sessionStorage.getItem('Tenant')+'/oauth2/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: qs.stringify({
         grant_type: 'client_credentials',
-        client_id: 'c8d818b1-1e19-4e7e-991a-1ee0715c5385',
-        client_secret: "dfdb9705-5333-4fc6-a7a7-59539a63a880",
+        client_id: sessionStorage.getItem('Client'),
+        client_secret: sessionStorage.getItem('Secret'),
         resource: "https://management.azure.com/"
       })
     })
@@ -53,7 +53,7 @@ class Home extends Component {
       .then(response => {
         console.warn(response)
         if (response.access_token != undefined) {
-          localStorage.setItem('token', response.access_token)
+          sessionStorage.setItem('token', response.access_token)
           this.setState({ logado: 1 })
         } else {
           this.setState({ logado: 0 })

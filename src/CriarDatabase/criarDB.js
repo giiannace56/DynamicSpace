@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import '../CriarApp/criarApp.css';
+import './criarDB.css';
 import Navbar from '../Assets/navbar'
 import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
-import basic from '../Assets/WebApp/AppService.json'
+import basic from '../Assets/Database/cosmodb.json'
 import Select from 'react-select'
 var qs = require('qs');
 let audioSent = new Audio(require('../Assets/Audio/sent.mp3'))
@@ -32,7 +32,7 @@ const styles = {
 
 }
 
-class Criar extends Component {
+class CriarDB extends Component {
 
     constructor() {
         super();
@@ -55,12 +55,6 @@ class Criar extends Component {
     select = () => {
         this.setState({ enviando: true })
         this.setState({ status: '' })
-        this.state.resource.properties.template.resources[0].name = "WApp" + this.state.name
-        this.state.resource.properties.template.resources[0].properties.serverFarmId = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourcegroups/" + this.state.resourceGroup + "/providers/Microsoft.Web/serverfarms/SFarm" + this.state.name
-        this.state.resource.properties.template.resources[0].dependsOn[0] = "Microsoft.Web/serverfarms/SFarm" + this.state.name
-        this.state.resource.properties.template.resources[0].properties.name = "WApp" + this.state.name
-        this.state.resource.properties.template.resources[1].name = "SFarm" + this.state.name
-        this.state.resource.properties.template.resources[1].properties.name = "SFarm" + this.state.name
         fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
             method: 'GET',
             headers: {
@@ -107,7 +101,7 @@ class Criar extends Component {
             body: JSON.stringify({
                 template: JSON.stringify(this.state.resource),
                 nomeRecurso: this.state.name,
-                tipoRecurso: 'WebApp',
+                tipoRecurso: 'CosmoDB',
                 recursoOnline: 'false'
             })
         })
@@ -132,21 +126,6 @@ class Criar extends Component {
         this.props.history.push('/select')
     }
 
-    mostrarWin = () => {
-        if (this.state.mostrarWin == 0) {
-            this.setState({ mostrarWin: 1 })
-        } else {
-            this.setState({ mostrarWin: 0 })
-        }
-    }
-
-    mostrarLin = () => {
-        if (this.state.mostrarLin == 0) {
-            this.setState({ mostrarLin: 1 })
-        } else {
-            this.setState({ mostrarLin: 0 })
-        }
-    }
 
 
     render() {
@@ -159,10 +138,11 @@ class Criar extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Web App</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Cosmo DB</p>
                         </div>
                     </StyleRoot>
                     <div>
+
                     </div>
                     <div className="sendStatus">
                         {this.state.enviando == true ?
@@ -185,7 +165,7 @@ class Criar extends Component {
                     <div style={styles.slideInLeft} className="criarBoxApp" >
                         <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome do Web App' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Nome do Cosmo DB' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
                                 ? <button className="buttonVM" onClick={this.select}>Criar</button>
@@ -193,8 +173,7 @@ class Criar extends Component {
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>N/A</button>
                         </div>
                         <div>
-                            <img style={{ marginLeft: 120, marginTop: 11 }} height={170} src={require('../Assets/images/webapp.png')} />
-
+                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/cosmo.png')} />
                         </div>
                     </div>
                 </StyleRoot>
@@ -203,4 +182,4 @@ class Criar extends Component {
     }
 }
 
-export default Criar;
+export default CriarDB;

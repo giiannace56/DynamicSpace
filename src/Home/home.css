@@ -6,6 +6,7 @@
 
 
 .backgroundRocket {
+    overflow-y: hidden;
     height: 100vh;
     background-color: rgb(214, 214, 214);
     background-image: url('../Assets/images/rocket.png');
@@ -13,4 +14,10 @@
     background-size: 550px;
     background-position-x: right;
     background-position-y: bottom;
+}
+
+.logout {
+    position: fixed;
+    top: 590px;
+    left: 10px;
 }

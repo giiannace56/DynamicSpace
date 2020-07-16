@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './select.css';
 import Navbar from '../Assets/navbar'
 import Radium, { StyleRoot } from 'radium';
-import { slideInLeft, zoomInDown, slideInRight, slideInDown, flipInY } from 'react-animations'
+import { slideInLeft, zoomInDown, slideInRight, slideInDown, flipInY, flipInX } from 'react-animations'
 
 
 var qs = require('qs');
@@ -15,6 +15,10 @@ const styles = {
   flipInY: {
     animation: 'x 0.4s',
     animationName: Radium.keyframes(flipInY, 'flipInY')
+  },
+  flipInX: {
+    animation: 'x 0.4s',
+    animationName: Radium.keyframes(flipInX, 'flipInX')
   }
 }
 
@@ -39,13 +43,9 @@ class Select extends Component {
     event.preventDefault()
     this.props.history.push('/criarapp')
   }
-  navigateListar = (event) => {
+  navigateCriarDB = (event) => {
     event.preventDefault()
-    this.props.history.push('/listar')
-  }
-  navigateDeletar = (event) => {
-    event.preventDefault()
-    this.props.history.push('/deletar')
+    this.props.history.push('/criardb')
   }
   navigateVoltar = (event) => {
     event.preventDefault()
@@ -60,12 +60,14 @@ class Select extends Component {
           <a href="voltar" onClick={this.navigateVoltar}>
             <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/images/return.png')} />
           </a>
-          <p className="titleBarList">Selecione o tipo de recurso que deseja criar</p>
+          <StyleRoot>
+            <p style={styles.flipInX} className="titleBarList">Selecione o tipo de recurso que deseja criar</p>
+          </StyleRoot>
           <div style={{ marginRight: 40 }}>
           </div>
         </div>
         <div style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
-          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 97, height: 537 }}>
+          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 70, height: 537 }}>
             <StyleRoot style={{ marginTop: 100, marginLeft: 20, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
                 <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
@@ -84,7 +86,7 @@ class Select extends Component {
             </StyleRoot>
             <StyleRoot style={{ marginTop: 100, marginRight: 0, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
-                <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
+                <a href="criar" className="icon" onClick={this.navigateCriarDB} draggable="false">
                   <img className='imgs' draggable="false" width='200' src={require('../Assets/images/database.png')} />
                 </a>
               </div>

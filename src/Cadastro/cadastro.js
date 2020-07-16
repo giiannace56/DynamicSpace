@@ -27,8 +27,8 @@ class Cadastro extends Component {
       Client: '',
       data: [],
       repeticao: false,
-      incorreto: 0
-
+      incorreto: 0,
+      enviando: false
     }
   }
 
@@ -38,6 +38,7 @@ class Cadastro extends Component {
   }
 
   verificar = (event) => {
+    this.setState({ enviando: true })
     this.setState({ incorreto: 0 })
     event.preventDefault()
     this.state.repeticao = false
@@ -53,6 +54,7 @@ class Cadastro extends Component {
           if (element.pin == this.state.PIN) {
             this.setState({ repeticao: true })
             this.setState({ incorreto: 1 })
+            this.setState({ enviando: false })
           }
         });
         if (this.state.repeticao == false) {
@@ -77,6 +79,7 @@ class Cadastro extends Component {
     })
       .then(response => {
         this.setState({ status: response.status })
+        this.setState({ enviando: false })
         this.props.history.push('/')
       })
   }
@@ -91,18 +94,18 @@ class Cadastro extends Component {
           <div style={{ height: 25, position: 'relative', top: -25, width: 336, zIndex: 10, backgroundColor: 'rgba(30, 30, 30, 1)', justifyContent: 'space-between' }} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", backgroundColor: 'rgba(0, 0, 0, 0.15', marginTop: -25 }}>
-          <div style={{ marginLeft: 12, position: 'relative', left: 60, marginTop: 30, zIndex: 10 }}>
+          <div style={{ marginLeft: 12, position: 'relative', left: 90, marginTop: 10, zIndex: 10 }}>
             <img draggable="false" height='100' style={{ position: 'relative', top: 40, right: 2 }} src={require('../Assets/images/sn_logo.png')} />
             <p style={{ fontSize: 30, marginTop: 40, fontFamily: 'Roboto, sans-serif', textAlign: "center", color: 'grey' }}></p>
             <StyleRoot>
               <div style={styles.flipInY}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-                  <input placeholder="Sub" value={this.state.Subcription} onChange={(event) => { this.setState({ Subcription: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 20, position: 'relative', left: 21, fontSize: 30, textAlign: "center", color: 'grey' }} />
-                  <input placeholder="Client" value={this.state.Client} onChange={(event) => { this.setState({ Client: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 10, position: 'relative', left: 21, fontSize: 30, textAlign: "center", color: 'grey' }} />
-                  <input placeholder="Tenant" value={this.state.Tenant} onChange={(event) => { this.setState({ Tenant: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 10, position: 'relative', left: 21, fontSize: 30, textAlign: "center", color: 'grey' }} />
-                  <input placeholder="Secret" value={this.state.Secret} onChange={(event) => { this.setState({ Secret: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 10, position: 'relative', left: 21, fontSize: 30, textAlign: "center", color: 'grey' }} />
-                  <input placeholder="PIN" value={this.state.PIN} onChange={(event) => { this.setState({ PIN: event.target.value }) }} maxLength='4' style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 60, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 150, marginTop: 10, position: 'relative', left: 21, fontSize: 30, textAlign: "center", color: 'grey' }} />
+                  <input placeholder="Sub" value={this.state.Subcription} onChange={(event) => { this.setState({ Subcription: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 40, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 190, marginTop: 40, position: 'relative', left: 0, fontSize: 20, textAlign: "center", color: 'grey' }} />
+                  <input placeholder="Client" value={this.state.Client} onChange={(event) => { this.setState({ Client: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 40, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 190, marginTop: 10, position: 'relative', left: 0, fontSize: 20, textAlign: "center", color: 'grey' }} />
+                  <input placeholder="Tenant" value={this.state.Tenant} onChange={(event) => { this.setState({ Tenant: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 40, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 190, marginTop: 10, position: 'relative', left: 0, fontSize: 20, textAlign: "center", color: 'grey' }} />
+                  <input placeholder="Secret" value={this.state.Secret} onChange={(event) => { this.setState({ Secret: event.target.value }) }} style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 40, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 190, marginTop: 10, position: 'relative', left: 0, fontSize: 20, textAlign: "center", color: 'grey' }} />
+                  <input placeholder="PIN" value={this.state.PIN} onChange={(event) => { this.setState({ PIN: event.target.value }) }} maxLength='4' style={{ outline: 0, borderTop: 0, borderLeft: 0, borderRight: 0, height: 40, borderWidth: 1, borderColor: 'red', backgroundColor: 'rgba(0, 0, 0, 0)', width: 190, marginTop: 10, position: 'relative', left: 0, fontSize: 20, textAlign: "center", color: 'grey' }} />
 
                 </div>
                 <a className="botao" draggable='false' href='click' onClick={this.verificar}>
@@ -110,12 +113,21 @@ class Cadastro extends Component {
                 </a>
               </div>
             </StyleRoot>
-            <a href='voltar' style={{ position: 'relative', top: 17, left: 820 }} onClick={this.navigate}>
-              <p>voltar</p>
+            <a href='voltar' style={{ position: 'fixed', top: 550, left: 900 }} onClick={this.navigate}>
+              <img className="back" height={70} src={require('../Assets/images/return.png')} />
             </a>
+            <div className="loginstatus">
+              {this.state.enviando == true ?
+                <div class="spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div>
+                : <p />}
+            </div>
           </div>
-          <img style={{ display: 'flex', position: "relative", left: -181, top: 250, marginRight: -310, zIndex: 0 }} width={310} height={360} src={require('../Assets/images/rocket.png')} />
-          <img draggable="false" style={{ overflowY: 'hidden', marginTop: -25, marginLeft: 130, zIndex: 2 }} height='720' src={require('../Assets/images/fundologin.jpg')} />
+          <img style={{ display: 'flex', position: "relative", left: -152, top: 250, marginRight: -310, zIndex: 0 }} width={310} height={360} src={require('../Assets/images/rocket.png')} />
+          <img draggable="false" style={{ overflowY: 'hidden', marginTop: -25, marginLeft: 130, zIndex: 2 }} height='650' src={require('../Assets/images/fundologin.jpg')} />
         </div>
         {this.state.incorreto == 1 ?
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>

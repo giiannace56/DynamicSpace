@@ -205,8 +205,22 @@
     top: -3.5px;
 }
 
+.EnviandoStatusList {
+    position: fixed;
+    top: -63px;
+    left: 870px;
+    z-index: 200;
+}
+
 .deleteButtonOff {
     cursor: not-allowed;
+    margin-right: 20px;
+    position: relative;
+    top: -3.5px;
+}
+
+.deactivate {
+    cursor: pointer;
     margin-right: 20px;
     position: relative;
     top: -3.5px;
@@ -215,7 +229,8 @@
 .statusText {
     margin-top: 13px;
     font-size: 11px;
-    margin-left: -20px;
+    margin-left: -30px;
+    margin-right: 15px;
     font-family: 'Roboto';
 
 }
@@ -233,9 +248,12 @@
     transform: scale(1.5);
 }
 
-.deleteButtonOff:hover {
-    cursor: pointer;
+
+
+.deleteButtonQuestion:hover {
+    cursor: not-allowed;
 }
+
 
 .tipoRecursoList {
     font-family: 'Roboto';
@@ -246,7 +264,7 @@
 .backgroundLoading {
     position: fixed;
     left: 462px;
-    top: 350px;
+    top: 300px;
 }
 
 

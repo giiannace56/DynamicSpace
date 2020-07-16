@@ -1,0 +1,144 @@
+{
+    "properties": {
+        "mode": "incremental",
+        "template": {
+            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "resources": [
+                {
+                    "name": "Iface01teste",
+                    "type": "Microsoft.Network/networkInterfaces",
+                    "apiVersion": "2019-07-01",
+                    "location": "westus2",
+                    "dependsOn": [],
+                    "properties": {
+                        "ipConfigurations": [
+                            {
+                                "name": "ipcofig1",
+                                "properties": {
+                                    "privateIpAddressVersion": "IPv4",
+                                    "privateIPAllocationMethod": "Dynamic",
+                                    "subnet": {
+                                        "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/VNetTeste01/subnets/SubNetTest01"
+                                    },
+                                    "publicIPAddress": {
+                                        "id": "/subscriptions/d1087c32-2f35-425e-8376-e824688e5d8b/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/publicIPAddresses/IPublic01"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "tags": {}
+                },
+                {
+                    "name": "VNetTeste01",
+                    "type": "Microsoft.Network/virtualnetworks",
+                    "apiVersion": "2020-05-01",
+                    "location": "westus2",
+                    "properties": {
+                        "addressSpace": {
+                            "addressPrefixes": [
+                                "10.0.0.0/16"
+                            ]
+                        },
+                        "subnets": [
+                            {
+                                "name": "SubNetTest01",
+                                "properties": {
+                                    "addressPrefix": "10.0.0.0/24"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "IPublic01",
+                    "type": "Microsoft.Network/publicIPAddresses",
+                    "apiVersion": "2020-04-01",
+                    "location": "westus2",
+                    "sku": {
+                        "name": "Basic"
+                    },
+                    "properties": {
+                        "publicIPAllocationMethod": "Dynamic",
+                        "publicIPAddressVersion": "IPv4"
+                    }
+                },
+                {
+                    "name": "{{vmName}}",
+                    "location": "westus2",
+                    "dependsOn": [],
+                    "type": "Microsoft.Compute/virtualMachines",
+                    "apiVersion": "2019-12-01",
+                    "properties": {
+                        "hardwareProfile": {
+                            "vmSize": "Standard_D2_v3"
+                        },
+                        "storageProfile": {
+                            "imageReference": {
+                                "sku": "2016-Datacenter",
+                                "publisher": "MicrosoftWindowsServer",
+                                "version": "latest",
+                                "offer": "WindowsServer"
+                            },
+                            "osDisk": {
+                                "caching": "ReadWrite",
+                                "managedDisk": {
+                                    "storageAccountType": "Standard_LRS"
+                                },
+                                "name": "diskVMWinTeste01",
+                                "createOption": "FromImage"
+                            }
+                        },
+                        "osProfile": {
+                            "adminUsername": "Senai132",
+                            "computerName": "VMWinTeste01",
+                            "adminPassword": "Senai132"
+                        },
+                        "networkProfile": {
+                            "virtualNetworks": [
+                                {
+                                    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/VNetTeste01",
+                                    "properties": {
+                                        "type": "Microsoft.Network/virtualNetworks",
+                                        "primary": "true"
+                                    }
+                                }
+                            ],
+                            "networkInterfaces": [
+                                {
+                                    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/networkInterfaces/Iface01teste",
+                                    "properties": {
+                                        "name": "{{IfaceNet}}",
+                                        "type": "Microsoft.Network/networkInterfaces",
+                                        "primary": true
+                                    }
+                                }
+                            ],
+                            "networkSucurityGroupName": {
+                                "value": "grpteste01"
+                            },
+                            "networkSucurityGroupRules": {
+                                "value": [
+                                    {
+                                        "name": "RDP",
+                                        "properties": {
+                                            "priority": 300,
+                                            "protocol": "TCP",
+                                            "access": "Allow",
+                                            "direction": "Inbound",
+                                            "sourceAddressPrefix": "*",
+                                            "sourcePortRange": "*",
+                                            "destinationAddressPrefix": "*",
+                                            "destinationPortRange": "3389"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

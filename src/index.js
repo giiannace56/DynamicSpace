@@ -6,6 +6,7 @@ import criar from './Criar/criar'
 import select from './Select/select'
 import criarApp from './CriarApp/criarApp'
 import listar from './Listar/listar'
+import criarDB from './CriarDatabase/criarDB'
 import cadastro from './Cadastro/cadastro'
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, HashRouter as Router, Switch, Redirect, HashRouter } from "react-router-dom";
@@ -50,19 +51,26 @@ const Cadastro = ({ component: Component }) => (
     />
 )
 
+const CriarDB = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+
 //Add routes to pages
 
 const routing = (
     <HashRouter>
-            <Switch>
-                <Login exact path='/' component={login} />
-                <Home path='/home' component={home} />
-                <Criar path='/criar' component={criar} />
-                <Listar path='/deletar' component={listar} />
-                <Select path='/select' component={select} />
-                <CriarApp path='/criarapp' component={criarApp} />
-                <Cadastro path='/cadastro' component={cadastro} />
-            </Switch>
+        <Switch>
+            <Login exact path='/' component={login} />
+            <Home path='/home' component={home} />
+            <Criar path='/criar' component={criar} />
+            <Listar path='/listar' component={listar} />
+            <Select path='/select' component={select} />
+            <CriarApp path='/criarapp' component={criarApp} />
+            <Cadastro path='/cadastro' component={cadastro} />
+            <CriarDB path='/criardb' component={criarDB} />
+        </Switch>
     </HashRouter>
 );
 

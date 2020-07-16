@@ -1,0 +1,13 @@
+{
+    "location": "westus",
+    "properties": {
+        "databaseAccountOfferType": "Standard",
+        "locations": [
+            {
+                "failoverPriority": 0,
+                "locationName": "westus",
+                "isZoneRedundant": false
+            }
+        ]
+    }
+}

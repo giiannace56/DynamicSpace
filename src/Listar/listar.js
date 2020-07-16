@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import './listar.css';
 import Navbar from '../Assets/navbar'
-import { slideInLeft, slideInDown, slideInRight, shake } from 'react-animations'
+import { slideInLeft, slideInDown, slideInRight, shake, flipInX } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
 
+let audioCheck = new Audio(require('../Assets/Audio/check.mp3'))
 const styles = {
     slideInLeft: {
         animation: 'x 0.5s',
@@ -20,6 +21,10 @@ const styles = {
     slideInRight: {
         animation: 'x 0.2s',
         animationName: Radium.keyframes(slideInRight, 'slideInRight')
+    },
+    flipInX: {
+        animation: 'x 0.4s',
+        animationName: Radium.keyframes(flipInX, 'flipInX')
     }
 }
 
@@ -35,7 +40,8 @@ class Listar extends Component {
             deletado: '',
             resourceGroups: [],
             deploy: [],
-            tutorial: 0
+            tutorial: 0,
+            enviando: false
         }
     }
 
@@ -45,6 +51,7 @@ class Listar extends Component {
     }
 
     deleteGroup = (element) => {
+        this.setState({ enviando: true })
         sessionStorage.removeItem(element.grupoDeRecursos)
         this.setState({ grupoDeletado: element.id })
         fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
@@ -66,6 +73,7 @@ class Listar extends Component {
                 'Content-Type': 'application/json'
             }
         })
+        this.setState({ enviando: false })
         this.componentDidMount()
         this.componentDidMount()
 
@@ -82,6 +90,7 @@ class Listar extends Component {
     }
 
     async componentDidMount(element) {
+        this.setState({ enviando: true })
         console.warn(this.state.resourceGroups)
         this.setState({ recursoCriado: element })
         this.setState({ recursoCriado: '' })
@@ -112,10 +121,11 @@ class Listar extends Component {
             .then(response => {
                 this.setState({ resourceGroups: response })
             })
-
+        this.setState({ enviando: false })
     }
 
     deployGroup(element) {
+        this.setState({ enviando: true })
         fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'PUT',
             headers: {
@@ -135,10 +145,14 @@ class Listar extends Component {
                 grupoOnline: 'true'
             })
         })
-        sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'false')
-        sessionStorage.setItem(element.grupoDeRecursos, true)
-        this.componentDidMount(element.grupoDeRecursos)
-        this.componentDidMount(element.grupoDeRecursos)
+            .then(response => {
+                sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'false')
+                sessionStorage.setItem(element.grupoDeRecursos, true)
+                this.setState({ enviando: false })
+                audioCheck.play()
+                this.componentDidMount(element.grupoDeRecursos)
+                this.componentDidMount(element.grupoDeRecursos)
+            })
     }
 
     deactivateGroup(element) {
@@ -166,6 +180,7 @@ class Listar extends Component {
     deployResource(element) {
         switch (element.tipoRecurso) {
             case 'VirtualMachine':
+                this.setState({ enviando: true })
                 fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
@@ -183,8 +198,12 @@ class Listar extends Component {
                         recursoOnline: 'true'
                     })
                 })
+                this.setState({ enviando: false })
+                audioCheck.play()
+                this.componentDidMount()
                 break;
             case 'WebApp':
+                this.setState({ enviando: true })
                 fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/WApp' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
@@ -202,6 +221,32 @@ class Listar extends Component {
                         recursoOnline: 'true'
                     })
                 })
+                this.setState({ enviando: false })
+                audioCheck.play()
+                this.componentDidMount()
+                break;
+            case 'CosmoDB':
+                this.setState({ enviando: true })
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.DocumentDB/databaseAccounts/' + element.nomeRecurso + '?api-version=2020-04-01', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+                    body: JSON.stringify(JSON.parse(element.template))
+                })
+                fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recursoOnline: 'true'
+                    })
+                })
+                this.setState({ enviando: false })
+                audioCheck.play()
+                this.componentDidMount()
                 break;
             default:
                 break;
@@ -220,11 +265,24 @@ class Listar extends Component {
                         <a href="voltar" onClick={this.navigateVoltar}>
                             <img draggable="false" className="back" height={35} src={require('../Assets/images/return.png')} />
                         </a>
-                        <p className="titleBarList">Deploy de recursos</p>
+                        <StyleRoot>
+                            <div style={styles.flipInX}>
+                                <p className="titleBarList">Deploy de recursos</p>
+                            </div>
+                        </StyleRoot>
                         <a onClick={this.reload}>
                             <img draggable="false" className="refresh" height={35} src={require('../Assets/images/refresh.png')} />
                         </a>
                     </div>
+                </div>
+                <div className="EnviandoStatusList">
+                    {this.state.enviando == true ?
+                        <div class="spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                        : <p />}
                 </div>
                 <section style={{ overflowX: 'hidden' }}>
                     <div className="spacing" />
@@ -256,7 +314,7 @@ class Listar extends Component {
                                                         ?
                                                         <img onClick={() => this.deployGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/create.png')} />
                                                         :
-                                                        <img onClick={() => this.deactivateGroup(element)} className="deleteButtonOff" draggable='false' width={25} src={require('../Assets/images/correct.png')} />
+                                                        <img onClick={() => this.deactivateGroup(element)} className="deactivate" draggable='false' width={25} src={require('../Assets/images/correct.png')} />
                                                     }
                                                     <img onClick={() => this.deleteGroup(element)} className="deleteButton" draggable='false' width={25} src={require('../Assets/images/remove.png')} />
                                                 </div>

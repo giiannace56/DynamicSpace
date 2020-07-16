@@ -6,6 +6,7 @@ import Radium, { StyleRoot } from 'radium';
 
 var qs = require('qs');
 var assert = require('assert');
+let audioLogout = new Audio(require('../Assets/Audio/logout.mp3'))
 const styles = {
   slideInRight: {
     animation: 'x 1s',
@@ -22,6 +23,10 @@ const styles = {
   flipInY: {
     animation: 'x 0.4s',
     animationName: Radium.keyframes(flipInY, 'flipInY')
+  },
+  slideInUp: {
+    animation: 'x 0.4s',
+    animationName: Radium.keyframes(slideInUp, 'slideInUp')
   }
 
 }
@@ -37,7 +42,7 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    fetch('https://login.microsoftonline.com/'+sessionStorage.getItem('Tenant')+'/oauth2/token', {
+    fetch('https://login.microsoftonline.com/' + sessionStorage.getItem('Tenant') + '/oauth2/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -71,7 +76,14 @@ class Home extends Component {
   }
   navigateDeletar = (event) => {
     event.preventDefault()
-    this.props.history.push('/deletar')
+    this.props.history.push('/listar')
+  }
+
+  logout = (event) => {
+    event.preventDefault()
+    sessionStorage.clear()
+    audioLogout.play()
+    this.props.history.push('/')
   }
 
   render() {
@@ -102,9 +114,16 @@ class Home extends Component {
                 </div>
               </div>}
           </div>
+          <StyleRoot>
+            <div style={styles.slideInUp} className="logout">
+              <a onClick={this.logout} href="">
+                <img className="back" height={40} src={require('../Assets/images/logout.png')} />
+              </a>
+            </div>
+          </StyleRoot>
         </section>
         <div style={{ overflowX: 'hidden' }}>
-          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 100 }}>
+          <section style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-between', fontFamily: 'Roboto, sans-serif', marginTop: 70 }}>
             <StyleRoot className="icon" style={{ marginTop: 110, marginLeft: 200, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
                 <a href="criar" onClick={this.navigateCriar} draggable="false">

@@ -4,8 +4,10 @@ import Navbar from '../Assets/navbar'
 import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
 import basic from '../Assets/VirtualMachine/UbuntuVM.json'
+import basicWin from '../Assets/VirtualMachine/WindowsVM.json'
 import Select from 'react-select'
 var qs = require('qs');
+let audioSent = new Audio(require('../Assets/Audio/sent.mp3'))
 var assert = require('assert');
 const styles = {
     slideInRight: {
@@ -25,7 +27,7 @@ const styles = {
         animationName: Radium.keyframes(slideInLeft, 'slideInLeft')
     },
     flipInX: {
-        animation: 'x 1s',
+        animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
     }
 
@@ -37,11 +39,13 @@ class Criar extends Component {
         super();
         this.state = {
             resource: basic,
-            tamanhoVM: '',
+            resourceWin: basicWin,
+            tamanhoVM: 'Standard_A2_v2',
             resourceGroup: 'DefaultGroup',
             region: '',
             enviando: 0,
-            name: 'DefaultResource',
+            name: 'Ubuntu',
+            nameWin: 'Windows',
             mostrarWin: 0,
             mostrarLin: 0,
             status: '',
@@ -63,6 +67,7 @@ class Criar extends Component {
         this.state.resource.properties.template.resources[2].name = "I" + this.state.name
         this.state.resource.properties.template.resources[3].name = "VMubuntu" + this.state.name
         this.state.resource.properties.template.resources[3].properties.osProfile.computerName = "VMubuntu" + this.state.name
+        this.state.resource.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
         this.state.resource.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.name
         this.state.resource.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.name
         this.state.resource.properties.template.resources[3].properties.storageProfile.osDisk.name = "ubuntudisk" + this.state.name
@@ -88,6 +93,52 @@ class Criar extends Component {
                 if (this.state.possuiRepeticao == false) {
                     this.adicionarGrupo()
                     this.criarRecurso()
+                }
+            })
+
+    }
+
+    selectWin = () => {
+        this.setState({ enviando: true })
+        this.setState({ status: '' })
+        this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin + "/subnets/SubNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[0].name = "IFace" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[1].name = "VNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[2].name = "I" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].name = "VM" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.osProfile.computerName = "VM" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.storageProfile.osDisk.name = "windowsdisk" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
+        this.state.resourceWin.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkSucurityGroupName.value = this.state.nameWin
+        this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+
+
+        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(resposta => resposta.json())
+            .then(response => {
+                this.setState({ gruposCriados: response })
+                this.setState({ tamanhoResposta: response.length })
+                this.state.gruposCriados.forEach(element => {
+                    if (element.grupoDeRecursos == this.state.resourceGroup) {
+                        this.setState({ possuiRepeticao: true })
+                        this.criarRecursoWin()
+                    }
+                });
+                if (this.state.possuiRepeticao == false) {
+                    this.adicionarGrupo()
+                    this.criarRecursoWin()
                 }
             })
 
@@ -122,6 +173,32 @@ class Criar extends Component {
             .then(response => {
                 this.setState({ status: response.status })
                 this.setState({ possuiRepeticao: false })
+                audioSent.play()
+                this.setState({ enviando: false })
+                // this.setState({ tamanhoVM: '' })
+                // this.setState({ region: '' })
+                // this.setState({ name: '' })
+                // this.setState({ resourceGroup: '' })
+            })
+    }
+
+    criarRecursoWin = () => {
+        fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                template: JSON.stringify(this.state.resourceWin),
+                nomeRecurso: this.state.nameWin,
+                tipoRecurso: 'VirtualMachine',
+                recursoOnline: 'false'
+            })
+        })
+            .then(response => {
+                this.setState({ status: response.status })
+                this.setState({ possuiRepeticao: false })
+                audioSent.play()
                 this.setState({ enviando: false })
                 // this.setState({ tamanhoVM: '' })
                 // this.setState({ region: '' })
@@ -164,9 +241,12 @@ class Criar extends Component {
                     <a href="voltar" onClick={this.navigateVoltar}>
                         <img className="back" height={35} style={{ marginLeft: 10 }} src={require('../Assets/images/return.png')} />
                     </a>
-                    <p className="titleBarList" style={{ marginRight: 50 }}>Criar Máquina Virtual</p>
+                    <StyleRoot>
+                        <div style={styles.flipInX}>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Máquina Virtual</p>
+                        </div>
+                    </StyleRoot>
                     <div>
-
                     </div>
                     <div className="sendStatus">
                         {this.state.enviando == true ?
@@ -191,10 +271,9 @@ class Criar extends Component {
                             <select style={{
                                 border: "0px solid #090B80", borderRadius: "2px", marginBottom: "8px", width: "350px"
                             }} value={this.state.tamanhoVM} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
-                                <option value="">Selecione</option>
-                                <option value="valor1">Econômica</option>
-                                <option value="valor2">Intermediária</option>
-                                <option value="valor3">Alto custo</option>
+                                <option value="Standard_A2_v2">Econômica</option>
+                                <option value="Standard_D2_v3">Intermediária</option>
+                                <option value="Standard_D4a_v4">Alto custo</option>
                             </select>
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome da máquina' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
@@ -209,11 +288,7 @@ class Criar extends Component {
                                 <div style={styles.flipInX} className="infoBox">
                                     <p>Nome da máquina: {this.state.name}</p>
                                     <p>Região: West US 2</p>
-                                    <p>Armazenamento Temporário: 20Gb</p>
-                                    <p>RAM: 4Gb</p>
-                                    <p>vCPUs: 2</p>
-                                    <p>Custo por Hora: US$0,113/h</p>
-                                    <p>Média por mês: US$82,49/a</p>
+                                    <p>Capacidade da Máquina : {this.state.tamanhoVM}</p>
                                 </div>
                                 :
                                 <img style={{ marginRight: 100, marginTop: 11 }} height={170} src={require('../Assets/images/linux.png')} />
@@ -224,30 +299,25 @@ class Criar extends Component {
                         <div className="criarInputs">
                             <select style={{
                                 border: "0px solid #090B80", borderRadius: "2px", marginBottom: "8px", width: "350px"
-                            }} value={this.state.asd} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
-                                <option value="">Selecione</option>
-                                <option value="valor1">Econômica</option>
-                                <option value="valor2">Intermediária</option>
-                                <option value="valor3">Alto custo</option>
+                            }} value={this.state.tamanhoVM} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
+                                <option value="Standard_A2_v2">Econômica</option>
+                                <option value="Standard_D2_v3">Intermediária</option>
+                                <option value="Standard_D4a_v4">Alto custo</option>
                             </select>
-                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.asd} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.asd} onChange={(event) => { this.setState({ name: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.nameWin} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
-                                ? <button className="buttonVM" onClick={this.select}>Criar</button>
+                                ? <button className="buttonVM" onClick={this.selectWin}>Criar</button>
                                 : <button className="buttonVM">Enviando</button>}
                             <button className="buttonVMConfig" onClick={this.mostrarLin}>Mostrar configuração</button>
                         </div>
                         <StyleRoot>
                             {this.state.mostrarLin == 1 ?
                                 <div style={styles.flipInX} className="infoBox">
-                                    <p>Nome da máquina: {this.state.name}</p>
+                                    <p>Nome da máquina: {this.state.nameWin}</p>
                                     <p>Região: West US 2</p>
-                                    <p>Armazenamento Temporário: 20Gb</p>
-                                    <p>RAM: 4Gb</p>
-                                    <p>vCPUs: 2</p>
-                                    <p>Custo por Hora: US$0,113/h</p>
-                                    <p>Média por mês: US$82,49/a</p>
+                                    <p>Capacidade da Máquina : {this.state.tamanhoVM}</p>
                                 </div>
                                 :
                                 <img style={{ marginRight: 100, marginTop: 15 }} height={180} src={require('../Assets/images/windows.png')} />

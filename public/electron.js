@@ -10,7 +10,7 @@ function createWindow () {
   const win = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 720,
+    height: 650,
     frame: false,
     icon: path.join(__dirname, 'public/icon.ico'),
     resizable: false,

@@ -96,6 +96,11 @@ class CriarSA extends Component {
         })
     }
 
+    navigatePrevious = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criardb')
+    }
+
     criarRecurso = () => {
         fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
             method: 'POST',
@@ -143,7 +148,7 @@ class CriarSA extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Storage Account</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Storage Account</p>
                         </div>
                     </StyleRoot>
                     <div>
@@ -170,7 +175,7 @@ class CriarSA extends Component {
                     </div>
                 </StyleRoot>
                 <StyleRoot>
-                    <div style={styles.slideInLeft} className="criarBoxApp" >
+                    <div style={styles.slideInUp} className="criarBoxApp" >
                         <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome da Storage Account' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
@@ -181,8 +186,18 @@ class CriarSA extends Component {
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>N/A</button>
                         </div>
                         <div>
-                            <img style={{ marginLeft: 120, marginTop: 11 }} height={170} src={require('../Assets/images/idk.png')} />
+                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/idk.png')} />
                         </div>
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigatePrevious} className="previousIconCriar" style={styles.slideInLeft}>
+                        <img height={40} src={require('../Assets/images/previous.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div style={styles.slideInUp} className="footer">
+                        <p>Crie seus recursos</p>
                     </div>
                 </StyleRoot>
             </div>

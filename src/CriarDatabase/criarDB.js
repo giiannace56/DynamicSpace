@@ -28,6 +28,10 @@ const styles = {
     flipInX: {
         animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+    slideInDown: {
+        animation: 'x 0.5s',
+        animationName: Radium.keyframes(slideInDown, 'slideInDown')
     }
 
 }
@@ -95,6 +99,16 @@ class CriarDB extends Component {
         })
     }
 
+    navigatePrevious = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criarapp')
+    }
+
+    navigateNext = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criarsa')
+    }
+
     criarRecurso = () => {
         fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
             method: 'POST',
@@ -141,7 +155,7 @@ class CriarDB extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Cosmo DB</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Cosmo DB</p>
                         </div>
                     </StyleRoot>
                     <div>
@@ -168,7 +182,7 @@ class CriarDB extends Component {
                     </div>
                 </StyleRoot>
                 <StyleRoot>
-                    <div style={styles.slideInLeft} className="criarBoxApp" >
+                    <div style={styles.slideInUp} className="criarBoxApp" >
                         <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome do Cosmo DB' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
@@ -179,8 +193,23 @@ class CriarDB extends Component {
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>N/A</button>
                         </div>
                         <div>
-                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/cosmo.png')} />
+                            <img style={{ marginLeft: -30, marginTop: 11 }} height={170} src={require('../Assets/images/cosmo.png')} />
                         </div>
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigatePrevious} className="previousIconCriar" style={styles.slideInLeft}>
+                        <img height={40} src={require('../Assets/images/previous.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigateNext} className="nextIconCriar" style={styles.slideInRight}>
+                        <img height={40} src={require('../Assets/images/next.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div style={styles.slideInUp} className="footer">
+                        <p>Crie seus recursos</p>
                     </div>
                 </StyleRoot>
             </div>

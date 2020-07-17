@@ -3,8 +3,9 @@
 .criarBoxApp {
   display: flex;
   margin-top: 155px;
-  margin-left: 130px;
-  margin-right: 130px;
+  margin-left: 200px;
+  border-radius: 15px;
+  margin-right: 200px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.432);
   padding: 10px;
@@ -15,4 +16,39 @@
   align-self: center;
   flex-direction: column;
  
+}
+
+.groupListing:hover {
+  transition: ease-in, 300ms;
+  top: 194px;
+}
+
+.nextIconCriar {
+  cursor: pointer;
+  height: 40px;
+  position: fixed;
+  left: 950px;
+  top: 315px;
+}
+
+.previousIconCriar {
+  cursor: pointer;
+  height: 40px;
+  position: fixed;
+  left: 30px;
+  top: 315px;
+}
+
+.previousIconCriar:hover {
+  cursor: pointer;
+  height: 40px;
+  transition: ease-in, 200ms;
+}
+
+
+.nextIconCriar:hover {
+  transition: ease-in, 200ms;
+  height: 40px;
+  position: fixed;
+  
 }

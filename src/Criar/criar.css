@@ -19,11 +19,12 @@
 }
 
 .criarBox {
+  border-radius: 15px;
   display: flex;
   justify-content: space-between;
-  margin-top: 40px;
-  margin-left: 130px;
-  margin-right: 130px;
+  margin-top: 35px;
+  margin-left: 150px;
+  margin-right: 150px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.432);
   padding: 10px;
@@ -37,11 +38,12 @@
 }
 
 .criarBox2 {
+  border-radius: 15px;
   display: flex;
   justify-content: space-between;
   margin-top: 50px;
-  margin-left: 130px;
-  margin-right: 130px;
+  margin-left: 150px;
+  margin-right: 150px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.432);
   padding: 10px;
@@ -129,6 +131,7 @@
 .select {
   font-family: 'Roboto';
   color: gray;
+  text-align-last: center;
 }
 
 .spinner {

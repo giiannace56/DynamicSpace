@@ -1,0 +1,15 @@
+.footer {
+    position: fixed;
+    width: 100vw;
+    height: 20px;
+    background-color: rgb(33, 150, 243);
+    top: 630px;
+    font-family: 'Roboto';
+    text-align: center;
+    font-size: 15px;
+    color: white;
+}
+
+.footer > p {
+    margin-top: 1px;
+}

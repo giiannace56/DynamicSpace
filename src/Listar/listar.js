@@ -379,15 +379,15 @@ class Listar extends Component {
                                                     <p className="tag">Recurso:</p>
                                                     <p className="info">{element.nomeRecurso}</p>
                                                 </div>
-                                                <div className='tipoRecursoList'>
-                                                    <p>{element.tipoRecurso}</p>
-                                                </div>
                                                 <div className="statusText">
                                                     {element.recursoOnline == 'true' && sessionStorage.getItem(element._pk + 'IsOff') == 'false' || sessionStorage.getItem(element._pk + 'IsOff') == '' ?
                                                         <p className="online">OK!</p>
                                                         :
                                                         <p className="offline"></p>
                                                     }
+                                                </div>
+                                                <div className='tipoRecursoList'>
+                                                    <p>{element.tipoRecurso}</p>
                                                 </div>
                                                 <div className="btns">
                                                     {sessionStorage.getItem(element._pk) == 'true' ?

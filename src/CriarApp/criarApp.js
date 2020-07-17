@@ -10,7 +10,7 @@ let audioSent = new Audio(require('../Assets/Audio/sent.mp3'))
 var assert = require('assert');
 const styles = {
     slideInRight: {
-        animation: 'x 1s',
+        animation: 'x 0.5s',
         animationName: Radium.keyframes(slideInRight, 'slideInRight')
     },
     zoomInDown: {
@@ -22,12 +22,16 @@ const styles = {
         animationName: Radium.keyframes(slideInUp, 'slideInUp')
     },
     slideInLeft: {
-        animation: 'x 1s',
+        animation: 'x 0.5s',
         animationName: Radium.keyframes(slideInLeft, 'slideInLeft')
     },
     flipInX: {
         animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+    slideInDown: {
+        animation: 'x 0.5s',
+        animationName: Radium.keyframes(slideInDown, 'slideInDown')
     }
 
 }
@@ -53,7 +57,7 @@ class Criar extends Component {
     }
 
     select = () => {
-        if (this.state.nameWin && this.state.resourceGroup !== '') {
+        if (this.state.name && this.state.resourceGroup !== '') {
             this.setState({ enviando: true })
             this.setState({ status: '' })
             this.state.resource.properties.template.resources[0].name = "WApp" + this.state.name
@@ -135,6 +139,16 @@ class Criar extends Component {
         this.props.history.push('/select')
     }
 
+    navigatePrevious = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criar')
+    }
+
+    navigateNext = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criardb')
+    }
+
     mostrarWin = () => {
         if (this.state.mostrarWin == 0) {
             this.setState({ mostrarWin: 1 })
@@ -162,7 +176,7 @@ class Criar extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Web App</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Web App</p>
                         </div>
                     </StyleRoot>
                     <div>
@@ -188,7 +202,7 @@ class Criar extends Component {
                     </div>
                 </StyleRoot>
                 <StyleRoot>
-                    <div style={styles.slideInLeft} className="criarBoxApp" >
+                    <div style={styles.slideInUp} className="criarBoxApp" >
                         <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome do Web App' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
@@ -199,9 +213,23 @@ class Criar extends Component {
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>N/A</button>
                         </div>
                         <div>
-                            <img style={{ marginLeft: 120, marginTop: 11 }} height={170} src={require('../Assets/images/webapp.png')} />
-
+                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/webapp.png')} />
                         </div>
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigatePrevious} className="previousIconCriar" style={styles.slideInLeft}>
+                        <img height={40} src={require('../Assets/images/previous.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigateNext} className="nextIconCriar" style={styles.slideInRight}>
+                        <img height={40} src={require('../Assets/images/next.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div style={styles.slideInUp} className="footer">
+                        <p>Crie seus recursos</p>
                     </div>
                 </StyleRoot>
             </div>

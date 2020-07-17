@@ -161,6 +161,13 @@ class Criar extends Component {
         })
     }
 
+
+    navigateNext = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criarapp')
+    }
+
+
     criarRecurso = () => {
         fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
             method: 'POST',
@@ -247,7 +254,7 @@ class Criar extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Criar Máquina Virtual</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Máquina Virtual</p>
                         </div>
                     </StyleRoot>
                     <div>
@@ -327,9 +334,19 @@ class Criar extends Component {
                                     <p>Capacidade da Máquina : {this.state.tamanhoVM}</p>
                                 </div>
                                 :
-                                <img draggable="false" style={{ marginRight: 100, marginTop: 15 }} height={180} src={require('../Assets/images/windows.png')} />
+                                <img draggable="false" style={{ marginRight: 100, marginTop: 10 }} height={180} src={require('../Assets/images/windows.png')} />
                             }
                         </StyleRoot>
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigateNext} className="nextIconCriar" style={styles.slideInRight}>
+                        <img height={40} src={require('../Assets/images/next.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div style={styles.slideInUp} className="footer">
+                        <p>Crie seus recursos</p>
                     </div>
                 </StyleRoot>
             </div>

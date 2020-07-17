@@ -81,7 +81,7 @@ class Login extends Component {
           <div style={{ height: 25, position: 'relative', top: -25, width: 336, zIndex: 10, backgroundColor: 'rgba(30, 30, 30, 1)', justifyContent: 'space-between' }} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", backgroundColor: 'rgba(0, 0, 0, 0.15', marginTop: -25 }}>
-          <div style={{ marginLeft: 10, position: 'relative', left: 90, marginTop: 10, zIndex: 10 }}>
+          <div style={{ marginLeft: 10, position: 'relative', left: 90, marginTop: 20, zIndex: 10 }}>
             <img draggable="false" height='100' style={{ marginTop: 40 }} src={require('../Assets/images/sn_logo.png')} />
             <p style={{ fontSize: 30, marginTop: 40, fontFamily: 'Roboto, sans-serif', textAlign: "center", color: 'grey' }}></p>
             <StyleRoot>

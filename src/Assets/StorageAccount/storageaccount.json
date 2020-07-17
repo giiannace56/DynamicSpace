@@ -6,7 +6,7 @@
             "contentVersion": "1.0.0.0",
             "resources": [
                 {
-                    "name": "nome",
+                    "name": "jeronimostorage",
                     "type": "Microsoft.Storage/storageAccounts",
                     "apiVersion": "2019-06-01",
                     "sku": {
@@ -14,7 +14,7 @@
                         "tier": "Standard"
                     },
                     "kind": "Storage",
-                    "location": "eastus",
+                    "location": "westus2",
                     "properties": {
                         "supportsHttpsTrafficOnly": "false"
                     }

@@ -16,6 +16,14 @@
     background-position-y: bottom;
 }
 
+a{
+    -webkit-user-drag: none;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
 .logout {
     position: fixed;
     top: 590px;

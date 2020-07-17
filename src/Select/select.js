@@ -47,6 +47,10 @@ class Select extends Component {
     event.preventDefault()
     this.props.history.push('/criardb')
   }
+  navigateCriarSA = (event) => {
+    event.preventDefault()
+    this.props.history.push('/criarsa')
+  }
   navigateVoltar = (event) => {
     event.preventDefault()
     this.props.history.push('/home')
@@ -94,11 +98,11 @@ class Select extends Component {
             </StyleRoot>
             <StyleRoot style={{ marginTop: 100, marginRight: 20, zIndex: 1 }}>
               <div className='button' style={styles.flipInY}>
-                <a href="criar" className="icon" onClick={this.navigateCriar} draggable="false">
+                <a href="criar" className="icon" onClick={this.navigateCriarSA} draggable="false">
                   <img className='imgs' draggable="false" width='200' src={require('../Assets/images/idk.png')} />
                 </a>
               </div>
-              <p className="descSelect">?????????</p>
+              <p className="descSelect">Storage Account</p>
             </StyleRoot>
           </section>
         </div>

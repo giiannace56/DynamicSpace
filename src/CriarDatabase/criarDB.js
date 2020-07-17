@@ -53,30 +53,33 @@ class CriarDB extends Component {
     }
 
     select = () => {
-        this.setState({ enviando: true })
-        this.setState({ status: '' })
-        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(resposta => resposta.json())
-            .then(response => {
-                this.setState({ gruposCriados: response })
-                this.setState({ tamanhoResposta: response.length })
-                this.state.gruposCriados.forEach(element => {
-                    if (element.grupoDeRecursos == this.state.resourceGroup) {
-                        this.setState({ possuiRepeticao: true })
-                        this.criarRecurso()
-                    }
-                });
-                if (this.state.possuiRepeticao == false) {
-                    this.adicionarGrupo()
-                    this.criarRecurso()
+        if (this.state.name && this.state.resourceGroup !== '') {
+            this.setState({ enviando: true })
+            this.setState({ status: '' })
+            fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
-
+                .then(resposta => resposta.json())
+                .then(response => {
+                    this.setState({ gruposCriados: response })
+                    this.setState({ tamanhoResposta: response.length })
+                    this.state.gruposCriados.forEach(element => {
+                        if (element.grupoDeRecursos == this.state.resourceGroup) {
+                            this.setState({ possuiRepeticao: true })
+                            this.criarRecurso()
+                        }
+                    });
+                    if (this.state.possuiRepeticao == false) {
+                        this.adicionarGrupo()
+                        this.criarRecurso()
+                    }
+                })
+        } else {
+            this.setState({ status: 'erro' })
+        }
     }
 
     adicionarGrupo = () => {
@@ -158,6 +161,9 @@ class CriarDB extends Component {
                     <div className="sentStatus">
                         {this.state.status == 200 ?
                             <p style={styles.slideInRight}>Enviado!</p> :
+                            <p></p>}
+                        {this.state.status == 'erro' ?
+                            <p style={styles.slideInRight}>Vazio</p> :
                             <p></p>}
                     </div>
                 </StyleRoot>

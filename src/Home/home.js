@@ -116,8 +116,8 @@ class Home extends Component {
           </div>
           <StyleRoot>
             <div style={styles.slideInUp} className="logout">
-              <a onClick={this.logout} href="">
-                <img className="back" height={40} src={require('../Assets/images/logout.png')} />
+              <a draggable="false" onClick={this.logout} href="">
+                <img draggable="false" className="back" height={40} src={require('../Assets/images/logout.png')} />
               </a>
             </div>
           </StyleRoot>

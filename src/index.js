@@ -6,6 +6,7 @@ import criar from './Criar/criar'
 import select from './Select/select'
 import criarApp from './CriarApp/criarApp'
 import listar from './Listar/listar'
+import criarSA from './CriarSA/criarSA'
 import criarDB from './CriarDatabase/criarDB'
 import cadastro from './Cadastro/cadastro'
 import * as serviceWorker from './serviceWorker';
@@ -57,6 +58,12 @@ const CriarDB = ({ component: Component }) => (
     />
 )
 
+const CriarSA = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+
 //Add routes to pages
 
 const routing = (
@@ -70,6 +77,7 @@ const routing = (
             <CriarApp path='/criarapp' component={criarApp} />
             <Cadastro path='/cadastro' component={cadastro} />
             <CriarDB path='/criardb' component={criarDB} />
+            <CriarSA path='/criarsa' component={criarSA} />
         </Switch>
     </HashRouter>
 );

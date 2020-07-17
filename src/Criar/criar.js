@@ -41,11 +41,11 @@ class Criar extends Component {
             resource: basic,
             resourceWin: basicWin,
             tamanhoVM: 'Standard_A2_v2',
-            resourceGroup: 'DefaultGroup',
+            resourceGroup: '',
             region: '',
             enviando: 0,
-            name: 'Ubuntu',
-            nameWin: 'Windows',
+            name: '',
+            nameWin: '',
             mostrarWin: 0,
             mostrarLin: 0,
             status: '',
@@ -56,92 +56,96 @@ class Criar extends Component {
     }
 
     select = () => {
-        this.setState({ enviando: true })
-        this.setState({ status: '' })
-        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.name + "/subnets/SubNet" + this.state.name
-        this.state.resource.properties.template.resources[0].name = "IFace" + this.state.name
-        this.state.resource.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.name
-        this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.name
-        this.state.resource.properties.template.resources[1].name = "VNet" + this.state.name
-        this.state.resource.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.name
-        this.state.resource.properties.template.resources[2].name = "I" + this.state.name
-        this.state.resource.properties.template.resources[3].name = "VMubuntu" + this.state.name
-        this.state.resource.properties.template.resources[3].properties.osProfile.computerName = "VMubuntu" + this.state.name
-        this.state.resource.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
-        this.state.resource.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.name
-        this.state.resource.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.name
-        this.state.resource.properties.template.resources[3].properties.storageProfile.osDisk.name = "ubuntudisk" + this.state.name
-        this.state.resource.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.name
-        this.state.resource.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.name
-
-        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(resposta => resposta.json())
-            .then(response => {
-                this.setState({ gruposCriados: response })
-                this.setState({ tamanhoResposta: response.length })
-                this.state.gruposCriados.forEach(element => {
-                    if (element.grupoDeRecursos == this.state.resourceGroup) {
-                        this.setState({ possuiRepeticao: true })
-                        this.criarRecurso()
-                    }
-                });
-                if (this.state.possuiRepeticao == false) {
-                    this.adicionarGrupo()
-                    this.criarRecurso()
+        console.warn(this.state.resourceGroup)
+        if (this.state.name && this.state.resourceGroup !== '') {
+            this.setState({ enviando: true })
+            this.setState({ status: '' })
+            this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.name + "/subnets/SubNet" + this.state.name
+            this.state.resource.properties.template.resources[0].name = "IFace" + this.state.name
+            this.state.resource.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.name
+            this.state.resource.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.name
+            this.state.resource.properties.template.resources[1].name = "VNet" + this.state.name
+            this.state.resource.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.name
+            this.state.resource.properties.template.resources[2].name = "I" + this.state.name
+            this.state.resource.properties.template.resources[3].name = "VMubuntu" + this.state.name
+            this.state.resource.properties.template.resources[3].properties.osProfile.computerName = "VMubuntu" + this.state.name
+            this.state.resource.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
+            this.state.resource.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.name
+            this.state.resource.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.name
+            this.state.resource.properties.template.resources[3].properties.storageProfile.osDisk.name = "ubuntudisk" + this.state.name
+            this.state.resource.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.name
+            this.state.resource.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.name
+            fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
-
+                .then(resposta => resposta.json())
+                .then(response => {
+                    this.setState({ gruposCriados: response })
+                    this.setState({ tamanhoResposta: response.length })
+                    this.state.gruposCriados.forEach(element => {
+                        if (element.grupoDeRecursos == this.state.resourceGroup) {
+                            this.setState({ possuiRepeticao: true })
+                            this.criarRecurso()
+                        }
+                    });
+                    if (this.state.possuiRepeticao == false) {
+                        this.adicionarGrupo()
+                        this.criarRecurso()
+                    }
+                })
+        } else {
+            this.setState({ status: 'erro' })
+        }
     }
 
     selectWin = () => {
-        this.setState({ enviando: true })
-        this.setState({ status: '' })
-        this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin + "/subnets/SubNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[0].name = "IFace" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[1].name = "VNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[2].name = "I" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].name = "VM" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.osProfile.computerName = "VM" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.storageProfile.osDisk.name = "windowsdisk" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
-        this.state.resourceWin.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkSucurityGroupName.value = this.state.nameWin
-        this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
-
-
-        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(resposta => resposta.json())
-            .then(response => {
-                this.setState({ gruposCriados: response })
-                this.setState({ tamanhoResposta: response.length })
-                this.state.gruposCriados.forEach(element => {
-                    if (element.grupoDeRecursos == this.state.resourceGroup) {
-                        this.setState({ possuiRepeticao: true })
-                        this.criarRecursoWin()
-                    }
-                });
-                if (this.state.possuiRepeticao == false) {
-                    this.adicionarGrupo()
-                    this.criarRecursoWin()
+        if (this.state.nameWin && this.state.resourceGroup !== '') {
+            this.setState({ enviando: true })
+            this.setState({ status: '' })
+            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin + "/subnets/SubNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[0].name = "IFace" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[1].name = "VNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[2].name = "I" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].name = "VM" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.osProfile.computerName = "VM" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.storageProfile.osDisk.name = "windowsdisk" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
+            this.state.resourceWin.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkSucurityGroupName.value = this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].dependsOn[1] = "Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+            fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
-
+                .then(resposta => resposta.json())
+                .then(response => {
+                    this.setState({ gruposCriados: response })
+                    this.setState({ tamanhoResposta: response.length })
+                    this.state.gruposCriados.forEach(element => {
+                        if (element.grupoDeRecursos == this.state.resourceGroup) {
+                            this.setState({ possuiRepeticao: true })
+                            this.criarRecursoWin()
+                        }
+                    });
+                    if (this.state.possuiRepeticao == false) {
+                        this.adicionarGrupo()
+                        this.criarRecursoWin()
+                    }
+                })
+        } else {
+            this.setState({ status: 'erro' })
+        }
     }
 
     adicionarGrupo = () => {
@@ -263,6 +267,9 @@ class Criar extends Component {
                         {this.state.status == 200 ?
                             <p style={styles.slideInRight}>Enviado!</p> :
                             <p></p>}
+                        {this.state.status == 'erro' ?
+                            <p style={styles.slideInRight}>Vazio</p> :
+                            <p></p>}
                     </div>
                 </StyleRoot>
                 <StyleRoot>
@@ -291,7 +298,7 @@ class Criar extends Component {
                                     <p>Capacidade da Máquina : {this.state.tamanhoVM}</p>
                                 </div>
                                 :
-                                <img style={{ marginRight: 100, marginTop: 11 }} height={170} src={require('../Assets/images/linux.png')} />
+                                <img draggable="false" style={{ marginRight: 100, marginTop: 11 }} height={170} src={require('../Assets/images/linux.png')} />
                             }
                         </StyleRoot>
                     </div>
@@ -305,7 +312,7 @@ class Criar extends Component {
                                 <option value="Standard_D4a_v4">Alto custo</option>
                             </select>
                             <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.nameWin} onChange={(event) => { this.setState({ name: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Nome da máquina' value={this.state.nameWin} onChange={(event) => { this.setState({ nameWin: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
                                 ? <button className="buttonVM" onClick={this.selectWin}>Criar</button>
@@ -320,7 +327,7 @@ class Criar extends Component {
                                     <p>Capacidade da Máquina : {this.state.tamanhoVM}</p>
                                 </div>
                                 :
-                                <img style={{ marginRight: 100, marginTop: 15 }} height={180} src={require('../Assets/images/windows.png')} />
+                                <img draggable="false" style={{ marginRight: 100, marginTop: 15 }} height={180} src={require('../Assets/images/windows.png')} />
                             }
                         </StyleRoot>
                     </div>

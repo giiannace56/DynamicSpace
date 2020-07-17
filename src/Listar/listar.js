@@ -3,7 +3,7 @@ import './listar.css';
 import Navbar from '../Assets/navbar'
 import { slideInLeft, slideInDown, slideInRight, shake, flipInX } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
-
+let audioRemove = new Audio(require('../Assets/Audio/remove.mp3'))
 let audioCheck = new Audio(require('../Assets/Audio/check.mp3'))
 const styles = {
     slideInLeft: {
@@ -72,10 +72,12 @@ class Listar extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
+        }).then(() => {
+            audioRemove.play()
+            this.setState({ enviando: false })
+            this.componentDidMount()
+            this.componentDidMount()
         })
-        this.setState({ enviando: false })
-        this.componentDidMount()
-        this.componentDidMount()
 
     }
 
@@ -126,6 +128,15 @@ class Listar extends Component {
 
     deployGroup(element) {
         this.setState({ enviando: true })
+        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/' + element.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                grupoOnline: 'true'
+            })
+        })
         fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'PUT',
             headers: {
@@ -136,16 +147,7 @@ class Listar extends Component {
                 location: 'eastus'
             })
         })
-        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/' + element.id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                grupoOnline: 'true'
-            })
-        })
-            .then(response => {
+            .then(() => {
                 sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'false')
                 sessionStorage.setItem(element.grupoDeRecursos, true)
                 this.setState({ enviando: false })
@@ -156,6 +158,7 @@ class Listar extends Component {
     }
 
     deactivateGroup(element) {
+        this.setState({ enviando: true })
         fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element.grupoDeRecursos + '?api-version=2019-10-01', {
             method: 'DELETE',
             headers: {
@@ -171,16 +174,26 @@ class Listar extends Component {
             body: JSON.stringify({
                 grupoOnline: 'false'
             })
+        }).then(() => {
+            sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'true')
+            this.componentDidMount()
+            this.componentDidMount()
         })
-        sessionStorage.setItem(element.grupoDeRecursos + 'IsOff', 'true')
-        this.componentDidMount()
-        this.componentDidMount()
     }
 
     deployResource(element) {
         switch (element.tipoRecurso) {
             case 'VirtualMachine':
                 this.setState({ enviando: true })
+                fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recursoOnline: 'true'
+                    })
+                })
                 fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
@@ -188,7 +201,14 @@ class Listar extends Component {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
                     body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
                 })
+                break;
+            case 'WebApp':
+                this.setState({ enviando: true })
                 fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
                     method: 'PUT',
                     headers: {
@@ -198,12 +218,6 @@ class Listar extends Component {
                         recursoOnline: 'true'
                     })
                 })
-                this.setState({ enviando: false })
-                audioCheck.play()
-                this.componentDidMount()
-                break;
-            case 'WebApp':
-                this.setState({ enviando: true })
                 fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/WApp' + element.nomeRecurso + '?api-version=2019-10-01', {
                     method: 'PUT',
                     headers: {
@@ -211,7 +225,14 @@ class Listar extends Component {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
                     body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
                 })
+                break;
+            case 'CosmoDB':
+                this.setState({ enviando: true })
                 fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
                     method: 'PUT',
                     headers: {
@@ -221,12 +242,6 @@ class Listar extends Component {
                         recursoOnline: 'true'
                     })
                 })
-                this.setState({ enviando: false })
-                audioCheck.play()
-                this.componentDidMount()
-                break;
-            case 'CosmoDB':
-                this.setState({ enviando: true })
                 fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.DocumentDB/databaseAccounts/' + element.nomeRecurso + '?api-version=2020-04-01', {
                     method: 'PUT',
                     headers: {
@@ -234,7 +249,14 @@ class Listar extends Component {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
                     body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
                 })
+                break;
+            case 'StorageAccount':
+                this.setState({ enviando: true })
                 fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
                     method: 'PUT',
                     headers: {
@@ -244,9 +266,18 @@ class Listar extends Component {
                         recursoOnline: 'true'
                     })
                 })
-                this.setState({ enviando: false })
-                audioCheck.play()
-                this.componentDidMount()
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+                    body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
+                })
                 break;
             default:
                 break;
@@ -275,6 +306,7 @@ class Listar extends Component {
                         </a>
                     </div>
                 </div>
+                <img width={550} style={{ position: 'fixed', zIndex: 0, top: 135, left: 474 }} src={require('../Assets/images/rocket.png')} />
                 <div className="EnviandoStatusList">
                     {this.state.enviando == true ?
                         <div class="spinner">

@@ -262,4 +262,8 @@
     top: 300px;
 }
 
+.backgroundLoading:active {
+    transition: ease-in,1000ms;
+    transform: rotate(900deg);
+}
 

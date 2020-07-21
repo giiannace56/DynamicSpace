@@ -1,5 +1,4 @@
-
- @font-face {
+@font-face {
     font-family: 'Roboto';
     src: url('../Assets/Roboto-Regular.ttf');
 }
@@ -22,8 +21,7 @@
     height: 40px;
     margin-top: 1px;
     background-color: rgb(238, 238, 238);
-}   
-
+}
 
 .listagemCard2 {
     display: flex;
@@ -34,47 +32,41 @@
     height: 40px;
     margin-top: 1px;
     background-color: rgba(233, 233, 233, 0.61);
-}   
-
+}
 
 .listagemCardDeletado {
     display: flex;
     justify-content: space-between;
-    transition: ease-in,500ms;
+    transition: ease-in, 500ms;
     transform: translateX(100%);
     width: 511.5;
     height: 40px;
     margin-top: 1px;
     background-color: rgb(253, 86, 86);
-}   
-
-
+}
 
 .listagemCardDeletadoGrupo {
     display: flex;
     justify-content: space-between;
-    transition: ease-in,500ms;
+    transition: ease-in, 500ms;
     transform: translateX(-100%);
     width: 511.5;
     height: 40px;
     margin-top: 1px;
     background-color: rgb(253, 86, 86);
-}   
-
-
+}
 
 .fundoDelete {
     height: 100vh;
     background-color: rgb(214, 214, 214);
 }
 
-.mainView{
+.mainView {
     overflow-x: hidden;
     background-color: rgb(214, 214, 214);
     display: flex;
     justify-content: space-between;
 }
-
 
 .azureLogo {
     position: relative;
@@ -82,7 +74,7 @@
     top: 5px;
 }
 
-.titleList{
+.titleList {
     display: flex;
     font-family: 'Roboto';
     justify-content: space-between;
@@ -117,7 +109,7 @@
     width: 360px;
 }
 
-.listagemText2 > p {
+.listagemText2>p {
     margin-top: 10px;
 }
 
@@ -125,15 +117,15 @@
     background-color: rgb(247, 247, 247);
 }
 
-.listagemText > p:first-child {
+.listagemText>p:first-child {
     margin-left: 25px;
 }
 
-.listagemText > p {
+.listagemText>p {
     margin-top: 10px;
 }
 
-.info{
+.info {
     color: gray;
     margin-left: 10px;
 }
@@ -148,15 +140,13 @@
     height: 44px;
 }
 
-
-.backBar{
+.backBar {
     display: flex;
     justify-content: space-between;
     background-color: rgb(33, 150, 243);
 }
 
-
-.back{
+.back {
     margin-top: 4px;
     margin-left: 10px;
 }
@@ -167,7 +157,6 @@
     margin-top: 4px;
     margin-right: 10px;
 }
-
 
 .refresh:hover {
     transition: linear 200ms;
@@ -187,9 +176,7 @@
     color: white;
 }
 
-
-
-.universumLoading > div {
+.universumLoading>div {
     display: flex;
 }
 
@@ -227,14 +214,13 @@
     margin-left: -30px;
     margin-right: 15px;
     font-family: 'Roboto';
-
 }
 
-.online{
+.online {
     color: green;
 }
 
-.offline{
+.offline {
     color: red;
 }
 
@@ -243,12 +229,9 @@
     transform: scale(1.5);
 }
 
-
-
 .deleteButtonQuestion:hover {
     cursor: not-allowed;
 }
-
 
 .tipoRecursoList {
     font-family: 'Roboto';
@@ -262,8 +245,22 @@
     top: 300px;
 }
 
-.backgroundLoading:active {
-    transition: ease-in,1000ms;
-    transform: rotate(1080deg);
+
+.respostaVazia {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.432);
+    top: 570px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    text-align: center;
+    height: 60px;
+    width: 340px;
+    padding: 5px;
+    border-radius: 10px;
+    left: 655px;
+    font-family: 'Roboto';
 }
 
+.respostaVazia>p {
+    margin-top: 10px;
+}

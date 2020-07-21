@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './listar.css';
 import Navbar from '../Assets/navbar'
-import { slideInLeft, slideInDown, slideInRight, shake, flipInX } from 'react-animations'
+import { slideInLeft, slideInDown, slideInRight, shake, flipInX, slideInUp } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
 let audioRemove = new Audio(require('../Assets/Audio/remove.mp3'))
 let audioCheck = new Audio(require('../Assets/Audio/check.mp3'))
@@ -25,6 +25,10 @@ const styles = {
     flipInX: {
         animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
+    },
+    slideInUp: {
+        animation: 'x 0.4s',
+        animationName: Radium.keyframes(slideInUp, 'slideInUp')
     }
 }
 
@@ -41,7 +45,8 @@ class Listar extends Component {
             resourceGroups: [],
             deploy: [],
             tutorial: 0,
-            enviando: false
+            enviando: false,
+            respostaVazia: false
         }
     }
 
@@ -121,9 +126,12 @@ class Listar extends Component {
         })
             .then(resposta => resposta.json())
             .then(response => {
+                if (response == '') {
+                    this.setState({ respostaVazia: true })
+                }
                 this.setState({ resourceGroups: response })
+                this.setState({ enviando: false })
             })
-        this.setState({ enviando: false })
     }
 
     deployGroup(element) {
@@ -464,6 +472,15 @@ class Listar extends Component {
                         </div>
                     </div>
                 </section>
+                {this.state.respostaVazia == true ?
+                    <StyleRoot>
+                        <div style={styles.slideInUp} className="respostaVazia">
+                            <p>Não há nenhum recurso no Universum, crie um na aba de criação!</p>
+                        </div>
+                    </StyleRoot>
+                    :
+                    <div />
+                }
             </div>
         );
     }

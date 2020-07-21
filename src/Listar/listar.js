@@ -255,7 +255,55 @@ class Listar extends Component {
                     this.componentDidMount()
                 })
                 break;
+            case 'DataFactory':
+                this.setState({ enviando: true })
+                fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recursoOnline: 'true'
+                    })
+                })
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+                    body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
+                })
+                break;
             case 'StorageAccount':
+                this.setState({ enviando: true })
+                fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        recursoOnline: 'true'
+                    })
+                })
+                fetch('https://management.azure.com/subscriptions/' + sessionStorage.getItem('Subscription') + '/resourcegroups/' + element._pk + '/providers/Microsoft.Resources/deployments/' + element.nomeRecurso + '?api-version=2019-10-01', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+                    body: JSON.stringify(JSON.parse(element.template))
+                }).then(() => {
+                    audioCheck.play()
+                    this.setState({ enviando: false })
+                    this.componentDidMount()
+                })
+                break;
+            case 'Wordpress':
                 this.setState({ enviando: true })
                 fetch('https://dynamicspace.dev.objects.universum.blue/' + element._pk + '/' + element.id, {
                     method: 'PUT',

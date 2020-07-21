@@ -1,0 +1,11 @@
+.iconAviso {
+    position: fixed;
+    top: 138.5px;
+    left: 290px;
+}
+.iconAviso2 {
+    position: fixed;
+    top: 138.5px;
+    transform: rotateY(180deg);
+    left: 692px;
+}

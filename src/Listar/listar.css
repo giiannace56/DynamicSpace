@@ -264,6 +264,6 @@
 
 .backgroundLoading:active {
     transition: ease-in,1000ms;
-    transform: rotate(900deg);
+    transform: rotate(1080deg);
 }
 

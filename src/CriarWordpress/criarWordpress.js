@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import '../CriarApp/criarApp.css';
+import './criarWordpress.css';
 import Navbar from '../Assets/navbar'
-import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX } from 'react-animations'
+import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX, flash } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
-import basic from '../Assets/WebApp/AppService.json'
+import basic from '../Assets/Wordpress/wordpress.json'
 import Select from 'react-select'
 var qs = require('qs');
 let audioSent = new Audio(require('../Assets/Audio/sent.mp3'))
 var assert = require('assert');
 const styles = {
     slideInRight: {
-        animation: 'x 0.5s',
+        animation: 'x 1s',
         animationName: Radium.keyframes(slideInRight, 'slideInRight')
     },
     zoomInDown: {
@@ -22,21 +22,21 @@ const styles = {
         animationName: Radium.keyframes(slideInUp, 'slideInUp')
     },
     slideInLeft: {
-        animation: 'x 0.5s',
+        animation: 'x 1s',
         animationName: Radium.keyframes(slideInLeft, 'slideInLeft')
     },
     flipInX: {
         animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
     },
-    slideInDown: {
-        animation: 'x 0.5s',
-        animationName: Radium.keyframes(slideInDown, 'slideInDown')
-    }
+    flash: {
+        animation: 'x 1s',
+        animationName: Radium.keyframes(flash, 'flash')
+    },
 
 }
 
-class Criar extends Component {
+class CriarWordpress extends Component {
 
     constructor() {
         super();
@@ -52,7 +52,8 @@ class Criar extends Component {
             status: '',
             gruposCriados: [],
             tamanhoResposta: '',
-            possuiRepeticao: false
+            possuiRepeticao: false,
+            host: ''
         }
     }
 
@@ -60,12 +61,15 @@ class Criar extends Component {
         if (this.state.name && this.state.resourceGroup !== '') {
             this.setState({ enviando: true })
             this.setState({ status: '' })
-            this.state.resource.properties.template.resources[0].name = "WApp" + this.state.name
-            this.state.resource.properties.template.resources[0].properties.serverFarmId = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourcegroups/" + this.state.resourceGroup + "/providers/Microsoft.Web/serverfarms/SFarm" + this.state.name
-            this.state.resource.properties.template.resources[0].dependsOn[0] = "Microsoft.Web/serverfarms/SFarm" + this.state.name
-            this.state.resource.properties.template.resources[0].properties.name = "WApp" + this.state.name
-            this.state.resource.properties.template.resources[1].name = "SFarm" + this.state.name
-            this.state.resource.properties.template.resources[1].properties.name = "SFarm" + this.state.name
+            // this.state.resource.properties.template.variables.siteName = this.state.name
+            // this.state.resource.properties.template.variables.hostingPlanName = this.state.host
+            // this.state.resource.properties.template.resources[0].name = this.state.host
+            // this.state.resource.properties.template.resources[1].name = this.state.name
+            // this.state.resource.properties.template.resources[1].properties.name = this.state.name
+            // this.state.resource.properties.template.resources[1].properties.serverFarmId = this.state.host
+            // this.state.resource.properties.template.resources[1].resources[0].dependsOn = "Microsoft.Web/Sites/" + this.state.name
+            // this.state.resource.properties.template.resources[1].resources[1].dependsOn = "Microsoft.Web/Sites/" + this.state.name
+            // this.state.resource.properties.template.resources[1].dependsOn = "Microsoft.Web/serverFarms/" + this.state.host
             fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups/', {
                 method: 'GET',
                 headers: {
@@ -105,6 +109,11 @@ class Criar extends Component {
         })
     }
 
+    navigatePrevious = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criardatafactory')
+    }
+
     criarRecurso = () => {
         fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
             method: 'POST',
@@ -114,12 +123,13 @@ class Criar extends Component {
             body: JSON.stringify({
                 template: JSON.stringify(this.state.resource),
                 nomeRecurso: this.state.name,
-                tipoRecurso: 'WebApp',
+                tipoRecurso: 'Wordpress',
                 recursoOnline: 'false'
             })
         })
             .then(response => {
                 this.setState({ status: response.status })
+                console.warn(response)
                 this.setState({ possuiRepeticao: false })
                 audioSent.play()
                 this.setState({ enviando: false })
@@ -139,31 +149,6 @@ class Criar extends Component {
         this.props.history.push('/select')
     }
 
-    navigatePrevious = (event) => {
-        event.preventDefault()
-        this.props.history.push('/criar')
-    }
-
-    navigateNext = (event) => {
-        event.preventDefault()
-        this.props.history.push('/criardb')
-    }
-
-    mostrarWin = () => {
-        if (this.state.mostrarWin == 0) {
-            this.setState({ mostrarWin: 1 })
-        } else {
-            this.setState({ mostrarWin: 0 })
-        }
-    }
-
-    mostrarLin = () => {
-        if (this.state.mostrarLin == 0) {
-            this.setState({ mostrarLin: 1 })
-        } else {
-            this.setState({ mostrarLin: 0 })
-        }
-    }
 
 
     render() {
@@ -176,10 +161,11 @@ class Criar extends Component {
                     </a>
                     <StyleRoot>
                         <div style={styles.flipInX}>
-                            <p className="titleBarList" style={{ marginRight: 50 }}>Web App</p>
+                            <p className="titleBarList" style={{ marginRight: 50 }}>Wordpress</p>
                         </div>
                     </StyleRoot>
                     <div>
+
                     </div>
                     <div className="sendStatus">
                         {this.state.enviando == true ?
@@ -201,11 +187,16 @@ class Criar extends Component {
                             <p></p>}
                     </div>
                 </StyleRoot>
+                {/* <StyleRoot>
+                    <div style={styles.flash} className="aviso">
+                        <p>ATENÇÃO: Este recurso requer um nome ÚNICO global.</p>
+                    </div>
+                </StyleRoot> */}
                 <StyleRoot>
                     <div style={styles.slideInUp} className="criarBoxApp" >
                         <div className="criarInputsApp">
                             <input className="inputVM" placeholder='Grupo de Recursos' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
-                            <input className="inputVM" placeholder='Nome do Web App' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Nome do Wordpress' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
                                 ? <button className="buttonVM" onClick={this.select}>Criar</button>
@@ -213,18 +204,13 @@ class Criar extends Component {
                             <button className="buttonVMConfig" onClick={this.mostrarWin}>N/A</button>
                         </div>
                         <div>
-                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/webapp.png')} />
+                            <img style={{ marginLeft: 50, marginTop: 11 }} height={170} src={require('../Assets/images/wordpress.png')} />
                         </div>
                     </div>
                 </StyleRoot>
                 <StyleRoot>
                     <div onClick={this.navigatePrevious} className="previousIconCriar" style={styles.slideInLeft}>
                         <img height={40} src={require('../Assets/images/previous.png')} />
-                    </div>
-                </StyleRoot>
-                <StyleRoot>
-                    <div onClick={this.navigateNext} className="nextIconCriar" style={styles.slideInRight}>
-                        <img height={40} src={require('../Assets/images/next.png')} />
                     </div>
                 </StyleRoot>
                 <StyleRoot>
@@ -237,4 +223,4 @@ class Criar extends Component {
     }
 }
 
-export default Criar;
+export default CriarWordpress;

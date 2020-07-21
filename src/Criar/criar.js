@@ -51,7 +51,9 @@ class Criar extends Component {
             status: '',
             gruposCriados: [],
             tamanhoResposta: '',
-            possuiRepeticao: false
+            possuiRepeticao: false,
+            tamanhoVMWin: 'Standard_A2_v2',
+            resourceGroupWin: ''
         }
     }
 
@@ -102,20 +104,20 @@ class Criar extends Component {
     }
 
     selectWin = () => {
-        if (this.state.nameWin && this.state.resourceGroup !== '') {
+        if (this.state.nameWin && this.state.resourceGroupWin !== '') {
             this.setState({ enviando: true })
             this.setState({ status: '' })
-            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin + "/subnets/SubNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.subnet.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroupWin + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin + "/subnets/SubNet" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[0].name = "IFace" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[0].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
-            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[0].properties.ipConfigurations[0].properties.publicIPAddress.id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroupWin + "/providers/Microsoft.Network/publicIPAddresses/I" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[1].name = "VNet" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[1].properties.subnets[0].name = "SubNet" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[2].name = "I" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[3].name = "VM" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[3].properties.osProfile.computerName = "VM" + this.state.nameWin
-            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin
-            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroup + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.virtualNetworks[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroupWin + "/providers/Microsoft.Network/virtualNetworks/VNet" + this.state.nameWin
+            this.state.resourceWin.properties.template.resources[3].properties.networkProfile.networkInterfaces[0].id = "/subscriptions/" + sessionStorage.getItem('Subscription') + "/resourceGroups/" + this.state.resourceGroupWin + "/providers/Microsoft.Network/networkInterfaces/IFace" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[3].properties.storageProfile.osDisk.name = "windowsdisk" + this.state.nameWin
             this.state.resourceWin.properties.template.resources[3].properties.hardwareProfile.vmSize = this.state.tamanhoVM
             this.state.resourceWin.properties.template.resources[3].dependsOn[0] = "Microsoft.Network/virtualnetworks/VNet" + this.state.nameWin
@@ -139,7 +141,7 @@ class Criar extends Component {
                         }
                     });
                     if (this.state.possuiRepeticao == false) {
-                        this.adicionarGrupo()
+                        this.adicionarGrupoWin()
                         this.criarRecursoWin()
                     }
                 })
@@ -156,6 +158,19 @@ class Criar extends Component {
             },
             body: JSON.stringify({
                 grupoDeRecursos: this.state.resourceGroup,
+                grupoOnline: false
+            })
+        })
+    }
+
+    adicionarGrupoWin = () => {
+        fetch('https://dynamicspace.dev.objects.universum.blue/resourcegroups', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                grupoDeRecursos: this.state.resourceGroupWin,
                 grupoOnline: false
             })
         })
@@ -194,7 +209,7 @@ class Criar extends Component {
     }
 
     criarRecursoWin = () => {
-        fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroup, {
+        fetch('https://dynamicspace.dev.objects.universum.blue/' + this.state.resourceGroupWin, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -289,7 +304,7 @@ class Criar extends Component {
                                 <option value="Standard_D2_v3">Intermediária</option>
                                 <option value="Standard_D4a_v4">Alto custo</option>
                             </select>
-                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Grupo de Recursos' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome da máquina' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
@@ -313,12 +328,12 @@ class Criar extends Component {
                         <div className="criarInputs">
                             <select style={{
                                 border: "0px solid #090B80", borderRadius: "2px", marginBottom: "8px", width: "350px"
-                            }} value={this.state.tamanhoVM} onChange={(event) => { this.setState({ tamanhoVM: event.target.value }) }} className='select' name="GB">
+                            }} value={this.state.tamanhoVMWin} onChange={(event) => { this.setState({ tamanhoVMWin: event.target.value }) }} className='select' name="GB">
                                 <option value="Standard_A2_v2">Econômica</option>
                                 <option value="Standard_D2_v3">Intermediária</option>
                                 <option value="Standard_D4a_v4">Alto custo</option>
                             </select>
-                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroupWin} onChange={(event) => { this.setState({ resourceGroupWin: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome da máquina' value={this.state.nameWin} onChange={(event) => { this.setState({ nameWin: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true

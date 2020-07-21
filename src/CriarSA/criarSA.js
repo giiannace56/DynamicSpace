@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './criarSA.css';
 import Navbar from '../Assets/navbar'
-import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX } from 'react-animations'
+import { slideInRight, slideInLeft, slideInUp, zoomInDown, slideInDown, flipInX, flash } from 'react-animations'
 import Radium, { StyleRoot } from 'radium';
 import basic from '../Assets/StorageAccount/storageaccount.json'
 import Select from 'react-select'
@@ -28,7 +28,12 @@ const styles = {
     flipInX: {
         animation: 'x 0.4s',
         animationName: Radium.keyframes(flipInX, 'flipInX')
-    }
+    },
+    flash: {
+        animation: 'x 1s',
+        animationName: Radium.keyframes(flash, 'flash')
+    },
+
 
 }
 
@@ -99,6 +104,10 @@ class CriarSA extends Component {
     navigatePrevious = (event) => {
         event.preventDefault()
         this.props.history.push('/criardb')
+    }
+    navigateNext = (event) => {
+        event.preventDefault()
+        this.props.history.push('/criardatafactory')
     }
 
     criarRecurso = () => {
@@ -175,9 +184,20 @@ class CriarSA extends Component {
                     </div>
                 </StyleRoot>
                 <StyleRoot>
+                    <div className="iconAviso" style={styles.flash}>
+                        <img height={35} src={require('../Assets/images/error.png')} />
+                    </div>
+                    <div className="iconAviso2" style={styles.flash}>
+                        <img height={35} src={require('../Assets/images/error.png')} />
+                    </div>
+                    <div style={styles.flash} className="aviso">
+                        <p>ATENÇÃO: Este recurso requer um nome ÚNICO global.</p>
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
                     <div style={styles.slideInUp} className="criarBoxApp" >
                         <div className="criarInputsApp">
-                            <input className="inputVM" placeholder='Grupo de recurso' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
+                            <input className="inputVM" placeholder='Grupo de Recursos' value={this.state.resourceGroup} onChange={(event) => { this.setState({ resourceGroup: event.target.value }) }} />
                             <input className="inputVM" placeholder='Nome da Storage Account' value={this.state.name} onChange={(event) => { this.setState({ name: event.target.value }) }} />
                             <br />
                             {this.state.enviando != true
@@ -193,6 +213,11 @@ class CriarSA extends Component {
                 <StyleRoot>
                     <div onClick={this.navigatePrevious} className="previousIconCriar" style={styles.slideInLeft}>
                         <img height={40} src={require('../Assets/images/previous.png')} />
+                    </div>
+                </StyleRoot>
+                <StyleRoot>
+                    <div onClick={this.navigateNext} className="nextIconCriar" style={styles.slideInRight}>
+                        <img height={40} src={require('../Assets/images/next.png')} />
                     </div>
                 </StyleRoot>
                 <StyleRoot>

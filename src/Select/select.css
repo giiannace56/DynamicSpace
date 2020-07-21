@@ -6,3 +6,49 @@
     margin-top: 20px;
     font-size: 20px;
 }
+
+.numberNav {
+    opacity: 0.8;
+    background-color: rgb(33, 150, 243);
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+    border-radius: 20px;
+}
+
+.numberNavActive {
+    background-color: rgb(255, 255, 255);
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+    border-radius: 20px;
+}
+
+.numberNav:active {
+    background-color: white;
+    transition: ease-in, 0ms;
+
+}
+
+
+.numberNav:hover {
+    transform: scale(1.3);
+    cursor: pointer;
+    transition: ease-in, 100ms;
+}
+
+.numberNav > p {
+    font-family: 'Roboto';
+    margin-top: 5px;
+    text-align: center;
+}
+
+.numberNavActive > p {
+    font-family: 'Roboto';
+    margin-top: 5px;
+    text-align: center;
+}
+
+.selectNav {
+    display: flex;
+}

@@ -4,10 +4,13 @@ import login from './Login/login';
 import home from './Home/home'
 import criar from './Criar/criar'
 import select from './Select/select'
+import select2 from './Select/select2'
 import criarApp from './CriarApp/criarApp'
 import listar from './Listar/listar'
 import criarSA from './CriarSA/criarSA'
+import criarWordpress from './CriarWordpress/criarWordpress'
 import criarDB from './CriarDatabase/criarDB'
+import criarDatafactory from './CriarDatafactory/criardatafactory'
 import cadastro from './Cadastro/cadastro'
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, HashRouter as Router, Switch, Redirect, HashRouter } from "react-router-dom";
@@ -63,7 +66,21 @@ const CriarSA = ({ component: Component }) => (
         <Component {...props} />}
     />
 )
-
+const CriarDatafactory = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const CriarWordpress = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
+const Select2 = ({ component: Component }) => (
+    <Route render={props =>
+        <Component {...props} />}
+    />
+)
 //Add routes to pages
 
 const routing = (
@@ -74,10 +91,13 @@ const routing = (
             <Criar path='/criar' component={criar} />
             <Listar path='/listar' component={listar} />
             <Select path='/select' component={select} />
+            <Select2 path='/select2' component={select2} />
             <CriarApp path='/criarapp' component={criarApp} />
             <Cadastro path='/cadastro' component={cadastro} />
             <CriarDB path='/criardb' component={criarDB} />
             <CriarSA path='/criarsa' component={criarSA} />
+            <CriarDatafactory path='/criardatafactory' component={criarDatafactory} />
+            <CriarWordpress path='/criarwordpress' component={criarWordpress} />
         </Switch>
     </HashRouter>
 );

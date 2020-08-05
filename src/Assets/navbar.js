@@ -8,8 +8,11 @@ class Navbar extends Component {
     }
 
     close = () => {
-        var win = remote.BrowserWindow.getFocusedWindow();
-        win.close()
+        remote.BrowserWindow.getFocusedWindow().close();
+    }
+
+    minimize = () => {
+        remote.BrowserWindow.getFocusedWindow().minimize();
     }
 
     render() {
@@ -21,6 +24,9 @@ class Navbar extends Component {
                     <div class="bar" style={{ display: 'flex', height: 25, marginTop: 0, position: "relative", width: 900, backgroundColor: "rgba(30, 30, 30, 1)", zIndex: 100 }} />
                     <div style={{ display: 'flex', height: 25, marginTop: 0, justifyContent: 'space-between', position: "absolute", width: 124, top: 0, left: 900, backgroundColor: "rgba(30, 30, 30, 1)", zIndex: 20 }} >
                         <div style={{ zIndex: 20 }} />
+                        <a draggable='false' onClick={this.minimize} href='close'>
+                            <img draggable='false' width={14} height={14} style={{ marginLeft: 70, marginTop: 5 }} src={require('../Assets/images/minimize.png')} />
+                        </a>
                         <a draggable='false' onClick={this.close} href='close'>
                             <img draggable='false' width={14} height={14} style={{ marginRight: 10, marginTop: 5 }} src={require('../Assets/images/close.png')} />
                         </a>
